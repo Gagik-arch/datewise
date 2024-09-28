@@ -1,0 +1,35 @@
+{
+  "name": "calendar-npm",
+  "version": "2.0.4",
+  "description": "Calendar for java script (type script) projects.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "prepublish": "npm run build",
+    "start": "/example/index.html",
+    "build": "tsc",
+    "test": "node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gagik-arch/calendar.git"
+  },
+  "keywords": [
+    "calendar",
+    "java script calendar",
+    "js calendar",
+    "date picker",
+    "ts calendar",
+    "type script calendar"
+  ],
+  "author": "Gagik Chilingaryan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gagik-arch/calendar/issues"
+  },
+  "homepage": "https://github.com/Gagik-arch/calendar#readme",
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
