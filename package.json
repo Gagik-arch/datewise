@@ -1,9 +1,9 @@
 {
-  "name": "calendar-npm",
+  "name": "datewise",
   "version": "2.0.4",
   "description": "Calendar for java script (type script) projects.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "prepublish": "npm run build",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gagik-arch/calendar.git"
+    "url": "git+https://github.com/Gagik-arch/datewise.git"
   },
   "keywords": [
     "calendar",
@@ -26,9 +26,9 @@
   "author": "Gagik Chilingaryan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Gagik-arch/calendar/issues"
+    "url": "https://github.com/Gagik-arch/datewise/issues"
   },
-  "homepage": "https://github.com/Gagik-arch/calendar#readme",
+  "homepage": "https://github.com/Gagik-arch/datewise#readme",
   "devDependencies": {
     "typescript": "^4.9.5"
   }
