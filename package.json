@@ -1,6 +1,6 @@
 {
   "name": "datewise",
-  "version": "2.0.4",
+  "version": "0.1.0",
   "description": "Calendar for java script (type script) projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,7 +31,7 @@
     "url": "https://github.com/Gagik-arch/datewise/issues"
   },
   "homepage": "https://github.com/Gagik-arch/datewise#readme",
-  "devDependencies": {
-    "typescript": "^4.9.5"
+  "dependencies": {
+    "typescript": "^5.6.2"
   }
 }
