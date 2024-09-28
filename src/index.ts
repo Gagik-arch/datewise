@@ -3,37 +3,47 @@ import Day from './day.js';
 
 class Calendar implements ICalendar {
     public value: Date;
+    public locale: string;
     public days: IDay[];
-    #selectedDate: Date;
-    public range: Date[] = [];
-    public locale: string = 'en';
     public months: string[] = [];
     public weekDays: string[] = [];
+    #selectedDate: Date;
 
-    constructor(date: Date = new Date(), locale: string = 'en') {
-        this.value = new Date();
-        this.#selectedDate = new Date(date.setHours(0, 0, 0, 0));
-        this.days = this.initCalendar();
-        this.locale = locale;
+    constructor(date: Date, locale: string) {
+        this.value = date || new Date();
+        this.locale = locale || 'en-US';
+        this.days = this.#initCalendar();
         this.#generateWithLocale();
+
+        this.#selectedDate = new Date(
+            (date || new Date()).setHours(0, 0, 0, 0)
+        );
     }
+
     #generateWithLocale(): void {
-        this.months = Array.from({ length: 12 }, (_, i: number) => {
-            console.log(i);
-            return new Date(2024, i, 1).toLocaleString('en', { month: 'long' });
-        });
-        const date = new Date();
+        this.months = Array.from({ length: 12 }, (_, i: number) =>
+            new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
+        );
+
+        let date = new Date(2024, 8, 29);
+        var sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+
         this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
-            return new Date(2024, 0, i + 1).toLocaleString('en', {
-                month: 'long',
+            return new Date(
+                sunday.getFullYear(),
+                sunday.getMonth(),
+                sunday.getDate() + i
+            ).toLocaleString(this.locale, {
+                weekday: 'long',
             });
         });
     }
+
     public changeLocale(locale: string): void {
         this.locale = locale;
     }
 
-    initCalendar() {
+    #initCalendar() {
         const year: number = this.#selectedDate.getFullYear();
         const month: number = this.#selectedDate.getMonth();
 
@@ -42,11 +52,11 @@ class Calendar implements ICalendar {
             year
         );
 
+        const _prevMonthDaysCount: number = this.#daysInMonth(month, year);
         const _currentMonthDaysCount: number = this.#daysInMonth(
             month + 1,
             year
         );
-        const _prevMonthDaysCount: number = this.#daysInMonth(month, year);
         const dates: IDay[] = [];
 
         if (_firstDayOfWeek > 0) {
@@ -110,34 +120,31 @@ class Calendar implements ICalendar {
         return dates;
     }
 
-    public toDate(date: Date, selectedRange: Date) {
+    public toDate(date: Date) {
         if (!date) throw new Error('date is required');
-        if (selectedRange) {
-            this.createRange(selectedRange);
-        }
         this.#selectedDate = date;
         this.value = date;
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
     public toNextMonth() {
         this.#selectedDate = this.#getNextMonth(this.#selectedDate);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
     public toPrevMonth() {
         this.#selectedDate = this.#getPrevMonth(this.#selectedDate);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
     public toNextYear() {
         this.#selectedDate = this.#getNextYear(this.#selectedDate);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
     public toPrevYear() {
         this.#selectedDate = this.#getPrevYear(this.#selectedDate);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
     #daysInMonth(month: number, year: number) {
@@ -180,19 +187,6 @@ class Calendar implements ICalendar {
     }
     #compareTwoDates(date1: Date, date2: Date) {
         return date1.getTime() === date2.getTime();
-    }
-
-    private createRange(selectedRange: Date) {
-        this.range = [this.#selectedDate];
-        if (!this.range[1]) {
-            this.range.push(selectedRange);
-        } else {
-            this.range = [this.#selectedDate];
-        }
-
-        this.range = this.range?.sort(
-            (a: Date, b: Date) => a.getTime() - b.getTime()
-        );
     }
 }
 

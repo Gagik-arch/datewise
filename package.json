@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "prepublish": "npm run build",
-    "start": "/example/index.html",
+    "start": "./example/index.html",
     "build": "tsc",
     "test": "node ./dist/index.js"
   },

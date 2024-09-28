@@ -6,11 +6,12 @@ export interface IDay {
 
 export interface ICalendar {
     value: Date;
+    locale: string;
     days: IDay[];
-    range: Date[];
     toNextMonth(): void;
     toPrevMonth(): void;
     toNextYear(): void;
     toPrevYear(): void;
     toDate(date: Date, selectedRange?: Date): void;
+    changeLocale(locale: string): void;
 }
