@@ -14,22 +14,18 @@ import Day from './day.js';
 class Calendar {
     constructor(date, locale) {
         _Calendar_instances.add(this);
-        _Calendar_selectedDate.set(this, void 0);
         this.months = [];
         this.weekDays = [];
-        this.value = date || new Date();
+        _Calendar_selectedDate.set(this, void 0);
         this.locale = locale || 'en-US';
         __classPrivateFieldSet(this, _Calendar_selectedDate, new Date((date || new Date()).setHours(0, 0, 0, 0)), "f");
-        this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);
-        console.log(this.value);
+        this.value = __classPrivateFieldGet(this, _Calendar_selectedDate, "f");
         __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_generateWithLocale).call(this);
-    }
-    changeLocale(locale) {
-        this.locale = locale;
+        this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);
     }
     toDate(date) {
         if (!date)
-            throw new Error('date is required');
+            throw new Error('date<first argument> is required');
         __classPrivateFieldSet(this, _Calendar_selectedDate, date, "f");
         this.value = date;
         this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);
@@ -50,15 +46,14 @@ class Calendar {
         __classPrivateFieldSet(this, _Calendar_selectedDate, __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_getPrevYear).call(this, __classPrivateFieldGet(this, _Calendar_selectedDate, "f")), "f");
         this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);
     }
+    changeLocale(locale) {
+        this.locale = locale;
+    }
 }
 _Calendar_selectedDate = new WeakMap(), _Calendar_instances = new WeakSet(), _Calendar_generateWithLocale = function _Calendar_generateWithLocale() {
-    this.months = Array.from({ length: 12 }, (_, i) => {
-        return new Date(2024, i, 1).toLocaleString(this.locale, {
-            month: 'long',
-        });
-    });
+    this.months = Array.from({ length: 12 }, (_, i) => new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' }));
     let date = new Date(2024, 8, 29);
-    var sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+    const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
     this.weekDays = Array.from({ length: 7 }, (_, i) => {
         return new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i).toLocaleString(this.locale, {
             weekday: 'long',

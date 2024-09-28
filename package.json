@@ -16,12 +16,14 @@
     "url": "git+https://github.com/Gagik-arch/datewise.git"
   },
   "keywords": [
+    "datewise",
     "calendar",
     "java script calendar",
     "js calendar",
     "date picker",
     "ts calendar",
-    "type script calendar"
+    "type script calendar",
+    "date"
   ],
   "author": "Gagik Chilingaryan",
   "license": "ISC",

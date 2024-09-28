@@ -2,7 +2,7 @@ import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
 
 class Calendar implements ICalendar {
-    public value: Date;
+    public value: Date | null;
     public locale: string;
     public days: IDay[];
     public months: string[] = [];
@@ -10,14 +10,15 @@ class Calendar implements ICalendar {
     #selectedDate: Date;
 
     constructor(date: Date, locale: string) {
-        this.value = date || new Date();
         this.locale = locale || 'en-US';
-        this.days = this.#initCalendar();
-        this.#generateWithLocale();
 
         this.#selectedDate = new Date(
             (date || new Date()).setHours(0, 0, 0, 0)
         );
+        this.value = this.#selectedDate;
+
+        this.#generateWithLocale();
+        this.days = this.#initCalendar();
     }
 
     #generateWithLocale(): void {
@@ -26,7 +27,7 @@ class Calendar implements ICalendar {
         );
 
         let date = new Date(2024, 8, 29);
-        var sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
 
         this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
             return new Date(
@@ -39,10 +40,36 @@ class Calendar implements ICalendar {
         });
     }
 
+    public toDate(date: Date) {
+        if (!date) throw new Error('date<first argument> is required');
+        this.#selectedDate = date;
+        this.value = date;
+        this.days = this.#initCalendar();
+    }
+
+    public toNextMonth() {
+        this.#selectedDate = this.#getNextMonth(this.#selectedDate);
+        this.days = this.#initCalendar();
+    }
+
+    public toPrevMonth() {
+        this.#selectedDate = this.#getPrevMonth(this.#selectedDate);
+        this.days = this.#initCalendar();
+    }
+
+    public toNextYear() {
+        this.#selectedDate = this.#getNextYear(this.#selectedDate);
+        this.days = this.#initCalendar();
+    }
+
+    public toPrevYear() {
+        this.#selectedDate = this.#getPrevYear(this.#selectedDate);
+        this.days = this.#initCalendar();
+    }
+
     public changeLocale(locale: string): void {
         this.locale = locale;
     }
-
     #initCalendar() {
         const year: number = this.#selectedDate.getFullYear();
         const month: number = this.#selectedDate.getMonth();
@@ -118,33 +145,6 @@ class Calendar implements ICalendar {
             i++;
         }
         return dates;
-    }
-
-    public toDate(date: Date) {
-        if (!date) throw new Error('date is required');
-        this.#selectedDate = date;
-        this.value = date;
-        this.days = this.#initCalendar();
-    }
-
-    public toNextMonth() {
-        this.#selectedDate = this.#getNextMonth(this.#selectedDate);
-        this.days = this.#initCalendar();
-    }
-
-    public toPrevMonth() {
-        this.#selectedDate = this.#getPrevMonth(this.#selectedDate);
-        this.days = this.#initCalendar();
-    }
-
-    public toNextYear() {
-        this.#selectedDate = this.#getNextYear(this.#selectedDate);
-        this.days = this.#initCalendar();
-    }
-
-    public toPrevYear() {
-        this.#selectedDate = this.#getPrevYear(this.#selectedDate);
-        this.days = this.#initCalendar();
     }
 
     #daysInMonth(month: number, year: number) {
