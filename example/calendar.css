@@ -1,0 +1,17 @@
+#root {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+}
+
+#left {
+    min-width: 260px;
+    & > img {
+        max-width: 180px;
+    }
+}
+
+#datewise_day_container,
+#datewise_week_container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
