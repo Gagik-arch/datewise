@@ -19,6 +19,11 @@
             rel="stylesheet"
             href="./calendar.css"
         />
+
+        <link
+            rel="stylesheet"
+            href="./variables.css"
+        />
     </head>
     <body>
         <div id="root">
@@ -30,8 +35,11 @@
                 1
             </div>
             <div id="right">
-                <div id="datewise_week_container"></div>
-                <div id="datewise_day_container"></div>
+                <div id="block">
+                    <div id="datewise_date"></div>
+                    <div id="datewise_week_container"></div>
+                    <div id="datewise_day_container"></div>
+                </div>
             </div>
         </div>
         <script

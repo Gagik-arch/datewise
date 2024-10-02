@@ -20,26 +20,6 @@ class Calendar implements ICalendar {
         this.#generateWithLocale();
         this.days = this.#initCalendar();
     }
-
-    #generateWithLocale(): void {
-        this.months = Array.from({ length: 12 }, (_, i: number) =>
-            new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
-        );
-
-        let date = new Date(2024, 8, 29);
-        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
-
-        this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
-            return new Date(
-                sunday.getFullYear(),
-                sunday.getMonth(),
-                sunday.getDate() + i
-            ).toLocaleString(this.locale, {
-                weekday: 'long',
-            });
-        });
-    }
-
     public toDate(date: Date) {
         if (!date) throw new Error('date<first argument> is required');
         this.#selectedDate = date;
@@ -145,6 +125,24 @@ class Calendar implements ICalendar {
             i++;
         }
         return dates;
+    }
+    #generateWithLocale(): void {
+        this.months = Array.from({ length: 12 }, (_, i: number) =>
+            new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
+        );
+
+        let date = new Date(2024, 8, 29);
+        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+
+        this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
+            return new Date(
+                sunday.getFullYear(),
+                sunday.getMonth(),
+                sunday.getDate() + i
+            ).toLocaleString(this.locale, {
+                weekday: 'long',
+            });
+        });
     }
 
     #daysInMonth(month: number, year: number) {

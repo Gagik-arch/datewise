@@ -9,7 +9,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _Calendar_instances, _Calendar_selectedDate, _Calendar_generateWithLocale, _Calendar_initCalendar, _Calendar_daysInMonth, _Calendar_getFirstDayOfWeek, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
+var _Calendar_instances, _Calendar_selectedDate, _Calendar_initCalendar, _Calendar_generateWithLocale, _Calendar_daysInMonth, _Calendar_getFirstDayOfWeek, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
 import Day from './day.js';
 class Calendar {
     constructor(date, locale) {
@@ -50,16 +50,7 @@ class Calendar {
         this.locale = locale;
     }
 }
-_Calendar_selectedDate = new WeakMap(), _Calendar_instances = new WeakSet(), _Calendar_generateWithLocale = function _Calendar_generateWithLocale() {
-    this.months = Array.from({ length: 12 }, (_, i) => new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' }));
-    let date = new Date(2024, 8, 29);
-    const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
-    this.weekDays = Array.from({ length: 7 }, (_, i) => {
-        return new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i).toLocaleString(this.locale, {
-            weekday: 'long',
-        });
-    });
-}, _Calendar_initCalendar = function _Calendar_initCalendar() {
+_Calendar_selectedDate = new WeakMap(), _Calendar_instances = new WeakSet(), _Calendar_initCalendar = function _Calendar_initCalendar() {
     const year = __classPrivateFieldGet(this, _Calendar_selectedDate, "f").getFullYear();
     const month = __classPrivateFieldGet(this, _Calendar_selectedDate, "f").getMonth();
     const _firstDayOfWeek = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_getFirstDayOfWeek).call(this, month + 1, year);
@@ -102,6 +93,15 @@ _Calendar_selectedDate = new WeakMap(), _Calendar_instances = new WeakSet(), _Ca
         i++;
     }
     return dates;
+}, _Calendar_generateWithLocale = function _Calendar_generateWithLocale() {
+    this.months = Array.from({ length: 12 }, (_, i) => new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' }));
+    let date = new Date(2024, 8, 29);
+    const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+    this.weekDays = Array.from({ length: 7 }, (_, i) => {
+        return new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i).toLocaleString(this.locale, {
+            weekday: 'long',
+        });
+    });
 }, _Calendar_daysInMonth = function _Calendar_daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
 }, _Calendar_getFirstDayOfWeek = function _Calendar_getFirstDayOfWeek(month, year) {
