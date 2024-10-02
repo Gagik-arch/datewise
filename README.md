@@ -1,4 +1,4 @@
-# datewise
+# DATEWISE
 
 This project is intended to be consumed for all of type java script projects.
 
