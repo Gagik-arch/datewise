@@ -24,12 +24,14 @@
 
 #datewise_day_container {
     grid-template-rows: repeat(5, 6vw);
+    gap: 0 20px;
 }
 
 #datewise_day_container,
 #datewise_week_container {
     display: grid;
     grid-template-columns: repeat(7, 6vw);
+    gap: 0 20px;
 }
 
 .datewise_day,
