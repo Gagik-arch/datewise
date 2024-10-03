@@ -6,4 +6,5 @@ export default defineConfig({
         port: process.env.PORT as unknown as number,
     },
     plugins: [vercel()],
+    publicDir: 'public',
 });
