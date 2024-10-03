@@ -23,13 +23,13 @@
 }
 
 #datewise_day_container {
-    grid-template-rows: repeat(5, 5vw);
+    grid-template-rows: repeat(5, 6vw);
 }
 
 #datewise_day_container,
 #datewise_week_container {
     display: grid;
-    grid-template-columns: repeat(7, 5vw);
+    grid-template-columns: repeat(7, 6vw);
 }
 
 .datewise_day,
@@ -65,8 +65,8 @@
 }
 
 .datewise_day > div {
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
     display: flex;
     justify-content: center;
     align-items: center;
