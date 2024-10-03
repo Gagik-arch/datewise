@@ -19,19 +19,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    user-select: none;
 }
 
 #datewise_day_container {
     grid-template-rows: repeat(5, 5vw);
 }
 
-#datewise_week_container {
-    margin-bottom: 20px;
-}
 #datewise_day_container,
 #datewise_week_container {
     display: grid;
-    gap: 14px;
+    /* gap: 14px; */
     grid-template-columns: repeat(7, 5vw);
 }
 
@@ -47,13 +45,30 @@
     padding: 1vw 1.4vw;
     font-weight: 500;
     color: var(--blue);
+    cursor: pointer;
+    padding-bottom: 20px;
+    &:hover {
+        background-color: #e2e8ff48;
+        border-radius: 10px 10px 0 0;
+    }
 }
 
 .datewise_day {
+    cursor: pointer;
+    transition: background-color 160ms ease-in-out, color 160ms ease-in-out;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.datewise_day > div {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    border-radius: 50%;
 }
 
 #datewise_date {
@@ -61,16 +76,22 @@
     margin-bottom: 60px;
     font-size: 2vw;
     padding: 1vw 1.4vw;
+    position: relative;
 }
 
 .datewise_selected_day {
     background-color: var(--blue);
-    color: white;
+    color: white !important;
     border-radius: 50%;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 3;
+
+    &:hover {
+        background-color: var(--light-blue);
+    }
 }
 
 .datewise_selected_day::before,
@@ -81,7 +102,7 @@
     border-radius: 50%;
     animation: 800ms wave infinite ease-in-out;
     inset: 0;
-    z-index: -1;
+    z-index: 2;
 }
 
 .datewise_selected_day::before {
@@ -102,4 +123,34 @@
         transform: scale(1.5);
         opacity: 0;
     }
+}
+
+.datewise_current_month,
+.datewise_next_month {
+    &:hover {
+        color: white;
+        background-color: var(--light-blue);
+    }
+}
+
+.datewise_prev_month,
+.datewise_next_month {
+    color: #e9e9e9;
+}
+
+.datewise_prev_month {
+    cursor: no-drop;
+}
+
+.datewise_week_hover.datewise_day::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: #e2e8ff48;
+    border-radius: 0;
+}
+
+.datewise_week_hover_last.datewise_day::before {
+    border-radius: 0 0 10px 10px;
 }
