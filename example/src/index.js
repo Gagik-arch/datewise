@@ -4,7 +4,13 @@ const calendar = new Calendar();
 
 const weekContainer = document.getElementById('datewise_week_container');
 const dayContainer = document.getElementById('datewise_day_container');
-const date = document.getElementById('datewise_date');
+const monthContainer = document.getElementById('datewise_month_container');
+const monthScrollContainer = document.getElementById(
+    'datewise_month_scroll_container'
+);
+// const yearContainer = document.getElementById('datewise_year_container');
+// const arrowLeft = document.getElementById('arrow_left');
+// const arrowRight = document.getElementById('arrow_right');
 
 console.log(calendar);
 
@@ -53,12 +59,50 @@ const renderDays = () => {
         child.innerHTML = day.label;
     });
 };
-renderDays();
 
 const dateTimeFormat = new Intl.DateTimeFormat('en', {
     month: 'short',
     day: 'numeric',
     weekday: 'short',
 });
+const date = document.getElementById('datewise_date');
 
-date.innerHTML = dateTimeFormat.format(calendar.value);
+monthContainer.addEventListener('wheel', (e) => {
+    const y = +monthScrollContainer.style.top.replace('px', '');
+    const delta = -(e.deltaY / Math.abs(e.deltaY));
+    const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
+    const index = Math.abs(top / 84);
+    const elements = [
+        ...document.getElementsByClassName('datewise_month'),
+    ].slice(index - 2, index + 3);
+
+    elements[2];
+    console.log(elements);
+
+    monthScrollContainer.style.top = `${top}px`;
+});
+
+const renderMonthsAndYear = () => {
+    const year = document.getElementById('datewise_year');
+    year.innerHTML = calendar.value.getFullYear();
+
+    calendar.months.forEach((month) => {
+        const div = document.createElement('div');
+        monthScrollContainer.appendChild(div);
+        div.classList.add('datewise_month');
+        div.innerHTML = month;
+    });
+
+    const div = document.createElement('div');
+    monthScrollContainer.appendChild(div);
+    div.classList.add('month_fake');
+};
+
+const update = () => {
+    date.innerHTML = dateTimeFormat.format(calendar.value);
+
+    renderDays();
+    renderMonthsAndYear(calendar);
+};
+
+update();

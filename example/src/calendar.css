@@ -154,3 +154,71 @@
 .datewise_week_hover_last.datewise_day::before {
     border-radius: 0 0 10px 10px;
 }
+
+#datewise_month_container {
+    height: calc(5 * 84px);
+    margin-top: 40px;
+    overflow: hidden;
+    position: relative;
+}
+
+#datewise_month_scroll_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: top 180ms linear;
+}
+
+.datewise_month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    height: 84px;
+    font-size: 20px;
+}
+
+.month_fake {
+    height: calc(84px * 2);
+}
+#datewise_year_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 10px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+#logo {
+    padding: 80px 60px;
+    & > img {
+        max-width: 220px;
+    }
+}
+
+#arrow_left,
+#arrow_right {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    & > svg {
+        stroke: #b7c4e6;
+    }
+    &:hover svg {
+        stroke: #b7c4e6;
+    }
+}
+
+.datewise_selected_month {
+}
+
+.datewise_prev_month {
+}
+
+.datewise_selected_month {
+}

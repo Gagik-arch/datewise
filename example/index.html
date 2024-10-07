@@ -10,28 +10,28 @@
         <title>DATEWISE - calendar module for java script projects</title>
         <link
             rel="icon"
-            href="./assets/images/favicon.ico"
+            href="favicon.ico"
         />
         <link
             rel="shortcut icon"
-            href="./assets/images/favicon.png"
+            href=".favicon.png"
         />
         <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="./assets/images/favicon.png"
+            href="favicon.png"
         />
         <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href="./assets/images/favicon.png"
+            href="favicon.png"
         />
         <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="./assets/images/favicon.png"
+            href="favicon.png"
         />
         <link
             rel="stylesheet"
@@ -45,19 +45,31 @@
             rel="stylesheet"
             href="./src/calendar.css"
         />
+        <script src="https://unpkg.com/feather-icons"></script>
     </head>
     <body>
         <div id="root">
             <div id="left">
-                <img
-                    src="logo.png"
-                    alt="logo"
-                />
-                <img
-                    src="./assets/images/favicon.png"
-                    alt="favicon"
-                />
-                1
+                <div id="logo">
+                    <img
+                        src="logo.png"
+                        alt="logo"
+                    />
+                </div>
+                <div id="datewise_year_container">
+                    <span id="arrow_left">
+                        <i data-feather="chevron-left"></i>
+                    </span>
+                    <span id="datewise_year"></span>
+                    <span id="arrow_right">
+                        <i data-feather="chevron-right"></i>
+                    </span>
+                </div>
+                <div id="datewise_month_container">
+                    <div id="datewise_month_scroll_container">
+                        <div class="month_fake"></div>
+                    </div>
+                </div>
             </div>
             <div id="right">
                 <div id="block">
@@ -67,9 +79,13 @@
                 </div>
             </div>
         </div>
+
         <script
             type="module"
             src="./src/index.js"
         ></script>
+        <script>
+            feather.replace();
+        </script>
     </body>
 </html>
