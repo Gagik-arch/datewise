@@ -1,4 +1,5 @@
 import Calendar from '../../dist/index.js';
+import { filterMonths, addMonthStyles } from './utils.js';
 
 const calendar = new Calendar();
 
@@ -72,13 +73,12 @@ monthContainer.addEventListener('wheel', (e) => {
     const delta = -(e.deltaY / Math.abs(e.deltaY));
     const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
     const index = Math.abs(top / 84);
-    const elements = [
-        ...document.getElementsByClassName('datewise_month'),
-    ].slice(index - 2, index + 3);
 
-    elements[2];
-    console.log(elements);
+    const elements = [...document.getElementsByClassName('datewise_month')];
+    elements.forEach((element) => (element.className = 'datewise_month'));
+    const filteredElements = filterMonths(index, elements);
 
+    addMonthStyles(filteredElements);
     monthScrollContainer.style.top = `${top}px`;
 });
 
@@ -86,16 +86,17 @@ const renderMonthsAndYear = () => {
     const year = document.getElementById('datewise_year');
     year.innerHTML = calendar.value.getFullYear();
 
-    calendar.months.forEach((month) => {
+    calendar.months.forEach((month, index) => {
         const div = document.createElement('div');
+        if (index === 0) {
+            div.style.marginTop = `${84 * 2}px`;
+        } else if (index === calendar.months.length - 1) {
+            div.style.marginBottom = `${84 * 2}px`;
+        }
         monthScrollContainer.appendChild(div);
         div.classList.add('datewise_month');
         div.innerHTML = month;
     });
-
-    const div = document.createElement('div');
-    monthScrollContainer.appendChild(div);
-    div.classList.add('month_fake');
 };
 
 const update = () => {
