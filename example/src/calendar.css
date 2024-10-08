@@ -218,8 +218,8 @@
     left: 0;
     transition: top 180ms linear;
     width: 100%;
-    perspective: 600;
-    perspective-origin: center;
+    perspective: 900;
+    perspective-origin: center center;
 }
 
 .datewise_month {
@@ -237,7 +237,7 @@
 
 .datewise_selected_month {
     font-weight: 600;
-    font-size: 30px;
+    font-size: 32px;
     opacity: 1;
     color: #363636;
 }
@@ -260,8 +260,8 @@
 }
 
 .datewise_second_step_1 {
-    transform: rotateX(-30deg);
+    transform: rotateX(-40deg);
 }
 .datewise_second_step_2 {
-    transform: rotateX(30deg);
+    transform: rotateX(40deg);
 }
