@@ -229,7 +229,7 @@
     padding: 0 10px;
     height: 84px;
     font-size: 14px;
-    transition: all 160ms ease-in;
+    transition: all 90ms linear;
     font-weight: 400;
     user-select: none;
     color: rgba(105, 105, 105, 0.8);

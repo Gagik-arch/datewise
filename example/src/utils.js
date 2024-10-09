@@ -25,3 +25,11 @@ export const addMonthStyles = (elements) => {
 
     elements[2].classList.add('datewise_selected_month');
 };
+
+export const changeWheelStyles = (index) => {
+    const elements = [...document.getElementsByClassName('datewise_month')];
+    elements.forEach((element) => (element.className = 'datewise_month'));
+    const filteredElements = filterMonths(index, elements);
+
+    addMonthStyles(filteredElements);
+};

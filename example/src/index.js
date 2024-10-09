@@ -1,5 +1,5 @@
 import Calendar from '../../dist/index.js';
-import { filterMonths, addMonthStyles } from './utils.js';
+import { filterMonths, changeWheelStyles } from './utils.js';
 
 const calendar = new Calendar();
 
@@ -69,16 +69,13 @@ const dateTimeFormat = new Intl.DateTimeFormat('en', {
 const date = document.getElementById('datewise_date');
 
 monthContainer.addEventListener('wheel', (e) => {
-    const y = +monthScrollContainer.style.top.replace('px', '');
     const delta = -(e.deltaY / Math.abs(e.deltaY));
+    const y = +monthScrollContainer.style.top.replace('px', '');
+
     const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
     const index = Math.abs(top / 84);
 
-    const elements = [...document.getElementsByClassName('datewise_month')];
-    elements.forEach((element) => (element.className = 'datewise_month'));
-    const filteredElements = filterMonths(index, elements);
-
-    addMonthStyles(filteredElements);
+    changeWheelStyles(index);
     monthScrollContainer.style.top = `${top}px`;
 });
 
@@ -98,12 +95,35 @@ const renderMonthsAndYear = () => {
         div.innerHTML = month;
     });
 };
+let isDowned = false,
+    elementIndex = 0;
+
+monthContainer.addEventListener('mousedown', (e) => {
+    isDowned = true;
+});
+
+window.addEventListener('mouseup', (e) => {
+    isDowned = false;
+    changeWheelStyles(elementIndex);
+
+    monthScrollContainer.style.top = `${-elementIndex * 84}px`;
+});
+
+window.addEventListener('mousemove', (e) => {
+    if (!isDowned) return;
+    const delta = e.movementY < 0 ? -1 : 1;
+    const y = +monthScrollContainer.style.top.replace('px', '');
+    const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
+    elementIndex = Math.abs(top / 84);
+    console.log(elementIndex);
+});
 
 const update = () => {
     date.innerHTML = dateTimeFormat.format(calendar.value);
 
     renderDays();
     renderMonthsAndYear(calendar);
+    changeWheelStyles(0);
 };
 
 update();
