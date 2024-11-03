@@ -102,12 +102,13 @@ monthContainer.addEventListener('wheel', (e) => {
     changeWheelStyles(index)
     monthScrollContainer.style.transform = `translateY(${top}px)`
     y = top
-    const day = calendar.value.getDate()
-    const year = calendar.value.getFullYear()
+    const day = calendar.selected.getDate()
+    const year = calendar.selected.getFullYear()
 
     calendar.toDate(new Date(year, index, day))
     renderYear()
 })
+console.log(calendar);
 
 monthScrollContainer.addEventListener('click', e => {
     const target = e.target.closest('.datewise_month')
@@ -116,6 +117,12 @@ monthScrollContainer.addEventListener('click', e => {
     y = -target.dataset.index * MONTH_BLOCK_HEIGHT
 
     monthScrollContainer.style.transform = `translateY(${y}px)`
+
+    const index = Math.abs(y / MONTH_BLOCK_HEIGHT),
+        day = calendar.selected.getDate(),
+        year = calendar.selected.getFullYear();
+    calendar.toDate(new Date(year, index, day))
+    renderDays()
 })
 
 monthContainer.addEventListener('mousedown', () => {
@@ -125,7 +132,6 @@ monthContainer.addEventListener('mousedown', () => {
 window.addEventListener('mouseup', () => {
     isDowned = false
 })
-
 
 prevYearBtn.addEventListener('click', () => {
     calendar.toPrevYear()
@@ -162,7 +168,6 @@ const update = () => {
     changeWheelStyles(Math.abs(y / MONTH_BLOCK_HEIGHT))
     monthScrollContainer.style.transform = `translateY(${y}px)`
     renderYear()
-
 }
 
 update()
