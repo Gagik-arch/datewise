@@ -55,7 +55,6 @@ btn.onclick = () => {
     calendar.toNextMonth();
     calendar.toNextYear();
     calendar.toPrevYear();
-    calendar.toDate(date: Date, ): void;
     calendar.changeLocale('en');
 };
 ```
