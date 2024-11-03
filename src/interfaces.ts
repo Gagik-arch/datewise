@@ -1,6 +1,5 @@
 export interface IDay {
     date: Date;
-    label: number | string;
     status: string;
 }
 

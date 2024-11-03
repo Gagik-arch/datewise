@@ -1,7 +1,6 @@
 class Day {
-    constructor(date, label, status) {
+    constructor(date, status) {
         this.date = date;
-        this.label = label;
         this.status = status;
     }
 }

@@ -1,11 +1,12 @@
 import { IDay, ICalendar } from './interfaces';
 declare class Calendar implements ICalendar {
     #private;
-    value: Date | null;
+    value: Date;
     locale: string;
     days: IDay[];
     months: string[];
     weekDays: string[];
+    selected: Date;
     constructor(date: Date, locale: string);
     toDate(date: Date): void;
     toNextMonth(): void;

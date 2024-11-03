@@ -1,129 +1,169 @@
-import Calendar from '../../dist/index.js';
-import { filterMonths, changeWheelStyles } from './utils.js';
+import Calendar from '../../dist/index.js'
+import { changeWheelStyles } from './utils.js'
 
-const calendar = new Calendar();
+const MONTH_BLOCK_HEIGHT = 84;
 
-const weekContainer = document.getElementById('datewise_week_container');
-const dayContainer = document.getElementById('datewise_day_container');
-const monthContainer = document.getElementById('datewise_month_container');
+const calendar = new Calendar()
+
+const weekContainer = document.getElementById('datewise_week_container')
+const dayContainer = document.getElementById('datewise_day_container')
+const monthContainer = document.getElementById('datewise_month_container')
 const monthScrollContainer = document.getElementById(
     'datewise_month_scroll_container'
-);
-// const yearContainer = document.getElementById('datewise_year_container');
-// const arrowLeft = document.getElementById('arrow_left');
-// const arrowRight = document.getElementById('arrow_right');
-
-console.log(calendar);
+)
+const date = document.getElementById('datewise_date')
+const nextYearBtn = document.getElementById('arrow_right');
+const prevYearBtn = document.getElementById('arrow_left');
 
 calendar.weekDays.forEach((week, i) => {
-    const div = document.createElement('div');
-    weekContainer.appendChild(div);
-    div.classList.add('datewise_week');
-    div.dataset.weekday = i;
-    div.innerHTML = week.slice(0, 3);
+    const div = document.createElement('div')
+    weekContainer.appendChild(div)
+    div.classList.add('datewise_week')
+    div.dataset.weekday = i
+    div.innerHTML = week.slice(0, 3)
 
     div.onmouseenter = (e) => {
         const weekdays = [
             ...document.querySelectorAll(
                 `[data-weekday='${e.target.dataset.weekday}']`
             ),
-        ];
-        e.target.classList.add('datewise_week_hover');
+        ]
+        e.target.classList.add('datewise_week_hover')
         weekdays.forEach((day) => {
-            day.classList.add('datewise_week_hover');
-        });
-        weekdays.at(-1).classList.add('datewise_week_hover_last');
-    };
+            day.classList.add('datewise_week_hover')
+        })
+        weekdays.at(-1).classList.add('datewise_week_hover_last')
+    }
 
     div.onmouseleave = (e) => {
         const weekdays = [
             ...document.querySelectorAll(
                 `[data-weekday='${e.target.dataset.weekday}']`
             ),
-        ];
+        ]
         weekdays.forEach((day) => {
-            day.classList.remove('datewise_week_hover');
-        });
-        weekdays.at(-1).classList.remove('datewise_week_hover_last');
-    };
-});
+            day.classList.remove('datewise_week_hover')
+        })
+        weekdays.at(-1).classList.remove('datewise_week_hover_last')
+    }
+})
 
 const renderDays = () => {
+    dayContainer.innerHTML = ''
     calendar.days.forEach((day) => {
-        const parent = document.createElement('div');
-        const child = document.createElement('div');
-        dayContainer.appendChild(parent);
-        parent.appendChild(child);
-        parent.classList.add('datewise_day');
-        child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`);
-        parent.dataset.weekday = day.date.getDay();
-        child.innerHTML = day.label;
-    });
-};
+        const parent = document.createElement('div')
+        const child = document.createElement('div')
+        dayContainer.appendChild(parent)
+        parent.appendChild(child)
+        parent.classList.add('datewise_day')
+        child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+
+        parent.dataset.weekday = day.date.getDay()
+        parent.dataset.date = day.date.toString()
+        child.innerHTML = day.date.getDate()
+        let today = new Date()
+        today.setHours(0, 0, 0, 0)
+        if (today.getTime() === day.date.getTime()) {
+            child.classList.add('datewise_today')
+        }
+    })
+}
 
 const dateTimeFormat = new Intl.DateTimeFormat('en', {
     month: 'short',
     day: 'numeric',
     weekday: 'short',
-});
-const date = document.getElementById('datewise_date');
+})
+
+
+let isDowned = false,
+    y = -calendar.value.getMonth() * MONTH_BLOCK_HEIGHT
+
+const renderMonths = () => {
+    calendar.months.forEach((month, index) => {
+        const div = document.createElement('div')
+        if (index === 0) {
+            div.style.marginTop = `${MONTH_BLOCK_HEIGHT * 2}px`
+        } else if (index === calendar.months.length - 1) {
+            div.style.marginBottom = `${MONTH_BLOCK_HEIGHT * 2}px`
+        }
+        monthScrollContainer.appendChild(div)
+        div.classList.add('datewise_month')
+        div.innerHTML = month
+        div.dataset.index = index
+    })
+}
 
 monthContainer.addEventListener('wheel', (e) => {
-    const delta = -(e.deltaY / Math.abs(e.deltaY));
-    const y = +monthScrollContainer.style.top.replace('px', '');
+    const delta = -(e.deltaY / Math.abs(e.deltaY))
+    const top = Math.max(-(MONTH_BLOCK_HEIGHT * 11), Math.min(y + MONTH_BLOCK_HEIGHT * delta, 0))
+    const index = Math.abs(top / MONTH_BLOCK_HEIGHT)
 
-    const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
-    const index = Math.abs(top / 84);
+    changeWheelStyles(index)
+    monthScrollContainer.style.transform = `translateY(${top}px)`
+    y = top
+    const day = calendar.value.getDate()
+    const year = calendar.value.getFullYear()
 
-    changeWheelStyles(index);
-    monthScrollContainer.style.top = `${top}px`;
-});
+    calendar.toDate(new Date(year, index, day))
+    renderYear()
+})
 
-const renderMonthsAndYear = () => {
-    const year = document.getElementById('datewise_year');
-    year.innerHTML = calendar.value.getFullYear();
+monthScrollContainer.addEventListener('click', e => {
+    const target = e.target.closest('.datewise_month')
+    if (!target) return
+    changeWheelStyles(target.dataset.index)
+    y = -target.dataset.index * MONTH_BLOCK_HEIGHT
 
-    calendar.months.forEach((month, index) => {
-        const div = document.createElement('div');
-        if (index === 0) {
-            div.style.marginTop = `${84 * 2}px`;
-        } else if (index === calendar.months.length - 1) {
-            div.style.marginBottom = `${84 * 2}px`;
-        }
-        monthScrollContainer.appendChild(div);
-        div.classList.add('datewise_month');
-        div.innerHTML = month;
-    });
-};
-let isDowned = false,
-    elementIndex = 0;
+    monthScrollContainer.style.transform = `translateY(${y}px)`
+})
 
-monthContainer.addEventListener('mousedown', (e) => {
-    isDowned = true;
-});
+monthContainer.addEventListener('mousedown', () => {
+    isDowned = true
+})
 
-window.addEventListener('mouseup', (e) => {
-    isDowned = false;
-    changeWheelStyles(elementIndex);
+window.addEventListener('mouseup', () => {
+    isDowned = false
+})
 
-    monthScrollContainer.style.top = `${-elementIndex * 84}px`;
-});
 
-window.addEventListener('mousemove', (e) => {
-    if (!isDowned) return;
-    const delta = e.movementY < 0 ? -1 : 1;
-    const y = +monthScrollContainer.style.top.replace('px', '');
-    const top = Math.max(-(84 * 11), Math.min(y + 84 * delta, 0));
-    elementIndex = Math.abs(top / 84);
-    console.log(elementIndex);
-});
+prevYearBtn.addEventListener('click', () => {
+    calendar.toPrevYear()
+    renderDays()
+    renderYear()
+})
+
+nextYearBtn.addEventListener('click', () => {
+    calendar.toNextYear()
+    renderDays()
+    renderYear()
+})
+
+dayContainer.addEventListener('click', e => {
+    const target = e.target.closest('.datewise_day')
+
+    if (!target?.dataset.date) return
+    calendar.toDate(new Date(target.dataset.date))
+    renderDays()
+})
+
+
+const renderYear = () => {
+    const year = document.getElementById('datewise_year')
+    year.innerHTML = calendar.selected.getFullYear()
+    renderDays()
+}
 
 const update = () => {
-    date.innerHTML = dateTimeFormat.format(calendar.value);
+    date.innerHTML = dateTimeFormat.format(calendar.value)
 
-    renderDays();
-    renderMonthsAndYear(calendar);
-    changeWheelStyles(0);
-};
+    renderDays()
+    renderMonths(calendar)
+    changeWheelStyles(Math.abs(y / MONTH_BLOCK_HEIGHT))
+    monthScrollContainer.style.transform = `translateY(${y}px)`
+    renderYear()
 
-update();
+}
+
+update()
+window.addEventListener('click', () => { })

@@ -23,7 +23,7 @@
 }
 
 #datewise_day_container {
-    grid-template-rows: repeat(5, 6vw);
+    grid-template-rows: repeat(6, 6vw);
     gap: 0 20px;
 }
 
@@ -129,7 +129,16 @@
 .datewise_next_month {
     &:hover {
         color: white;
+    }
+}
+.datewise_current_month {
+    &:hover {
         background-color: var(--light-blue);
+    }
+}
+.datewise_next_month {
+    &:hover {
+        background-color: var(--light-gray) ;
     }
 }
 
@@ -188,6 +197,7 @@
     font-size: 34px;
     font-weight: 500;
     margin-bottom: 20px;
+    user-select: none
 }
 
 #logo {
@@ -216,10 +226,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: top 180ms linear;
+    transition: all 110ms linear;
     width: 100%;
     perspective: 900;
     perspective-origin: center center;
+    transform: translateY(0px);
 }
 
 .datewise_month {
@@ -233,6 +244,9 @@
     font-weight: 400;
     user-select: none;
     color: rgba(105, 105, 105, 0.8);
+    &:hover{
+        color: rgba(50, 50, 50, 1);
+    }
 }
 
 .datewise_selected_month {
@@ -264,4 +278,9 @@
 }
 .datewise_second_step_2 {
     transform: rotateX(40deg);
+}
+
+.datewise_today{
+    background-color:rgba(255, 209, 73,0.8);
+    color: white
 }
