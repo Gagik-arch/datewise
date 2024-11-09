@@ -9,7 +9,7 @@ This calendar is intended to be consumed for all of type java script projects.
         <img src="./github-logo.png" width="50px">
     </a>
     <a href="https://www.npmjs.com/package/datewise" title="npm version">
-        <img src="./github-logo.png" width="50" >
+        <img src="./npm-logo.png" width="50" >
     </a>
 </span>
 
