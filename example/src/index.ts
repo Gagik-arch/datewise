@@ -129,9 +129,9 @@ monthScrollContainer?.addEventListener('click', e => {
 
     monthScrollContainer.style.transform = `translateY(${y}px)`
 
-    const index = Math.abs(y / MONTH_BLOCK_HEIGHT),
-        month = calendar.selected.getMonth(),
-        diff = index - month;
+    const index: number = Math.abs(y / MONTH_BLOCK_HEIGHT),
+        month: number = calendar.selected.getMonth(),
+        diff: number = index - month;
 
     for (let i: number = 0; i < Math.abs(diff); i++) {
         if (diff > 0) {
