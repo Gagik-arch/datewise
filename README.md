@@ -3,8 +3,8 @@
 </a>
 This project is intended to be consumed for all of type java script projects.
 
-[![Build Status](https://github.com/Gagik-arch/datewise)](https://github.com/Gagik-arch/datewise)
-[![npm version](https://www.npmjs.com/package/datewise)](https://www.npmjs.com/package/datewise)
+[![Build Status](./github-logo.png)](https://github.com/Gagik-arch/datewise)
+[![npm version](./npm-logo.svg)](https://www.npmjs.com/package/datewise)
 
 ## Table of contents
 
@@ -36,14 +36,14 @@ $ npm install datewise
 
 #### Methods
 
-| Method      | argument      |
-| ----------- | ------------- |
-| toDate      | Date {Object} |
-| toPrevMonth | none          |
-| toNextMonth | none          |
-| toNextYear  | none          |
-| toPrevYear  | none          |
-| changeLocale| locale:string |
+| Method      | argument      | return type  |
+| ----------- | ------------- | ------------ |
+| toDate      | Date {Object} |     void     |
+| toPrevMonth | none          |     void     |
+| toNextMonth | none          |     void     |
+| toNextYear  | none          |     void     |
+| toPrevYear  | none          |     void     |
+| changeLocale| locale:string |     void     |
 
 Example:
 
@@ -53,7 +53,7 @@ const btn = document.getElementByTabName('button')[0];
 
 btn.onclick = () => {
     calendar.toDate(new Date(2025, 5, 16), (locale = 'en'));
-    calendar.toPrevMonth();
+//  calendar.toPrevMonth();
 //  calendar.toNextMonth();
 //  calendar.toNextYear();
 //  calendar.toPrevYear();
@@ -69,15 +69,16 @@ const calendar: ICalendar = new Calendar();
 
 #### Object
 
-| keys     | values        |
-| -------- | ------------- |
-| locale   | string 'en'   |
-| value    | Date {Object} |
-| months   | [string]      |
-| weekDays | [string]      |
-| days     | Day{Object}   |
-
-## Built With
+| keys     | values        |     example      |
+| -------- | ------------- |     --------     |
+| locale   | string        |       'en'       |
+| value    | Date {Object} |    new Date()    |
+| selected | Date {Object} |    new Date()    |
+| months   | string[]      | ["January",...]  |
+| weekDays | string[]      | ["Saturday",...] |
+| days     | Day[]         |     new Day()    |
+ 
+## Built With 
 
 -   Gagik-arch
 
