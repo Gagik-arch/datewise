@@ -6,10 +6,10 @@ This calendar is intended to be consumed for all of type java script projects.
 
 <span>
     <a href="https://github.com/Gagik-arch/datewise" title="Build Status">
-        <img src="./github-logo.png" width="50px">
+        <img src="./github-logo.png" width="auto" height="50px">
     </a>
     <a href="https://www.npmjs.com/package/datewise" title="npm version">
-        <img src="./npm-logo.png" width="50" >
+        <img src="./npm-logo.png" width="auto" height="50px">
     </a>
 </span>
 
