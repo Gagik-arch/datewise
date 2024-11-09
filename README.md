@@ -85,4 +85,4 @@ btn.onclick = () => {
  
 ## Author
 
--   **Gagik** - _Initial work_ - [gagik-arch](https://github.com/Gagik-arch/datewise)
+-   **Gagik** - _Initial work_ - [gagik-arch](https://github.com/Gagik-arch)
