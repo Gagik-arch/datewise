@@ -20,7 +20,6 @@ This calendar is intended to be consumed for all of type java script projects.
 -   [Arguments](#Arguments)
 -   [Methods](#Methods)
 -   [Object](#Object)
--   [Built With](#built-with)
 -   [Author](#author)
 
 ## Installation
@@ -85,10 +84,6 @@ const calendar: ICalendar = new Calendar();
 | weekDays | string[]      | ["Saturday",...] |
 | days     | Day[]         |     new Day()    |
  
-## Built With 
-
--   Gagik-arch
-
 ## Author
 
 -   **Gagik** - _Initial work_ - [gagik-arch](https://github.com/Gagik-arch/datewise)
