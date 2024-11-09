@@ -25,7 +25,7 @@ $ npm install datewise
 ## Usage
 
 ```sh
- const calendar = new Calendar()
+ const calendar:ICalendar = new Calendar()
 ```
 
 #### Arguments
@@ -43,6 +43,7 @@ $ npm install datewise
 | toNextMonth | none          |
 | toNextYear  | none          |
 | toPrevYear  | none          |
+| changeLocale| locale:string |
 
 Example:
 
@@ -53,10 +54,10 @@ const btn = document.getElementByTabName('button')[0];
 btn.onclick = () => {
     calendar.toDate(new Date(2025, 5, 16), (locale = 'en'));
     calendar.toPrevMonth();
-    calendar.toNextMonth();
-    calendar.toNextYear();
-    calendar.toPrevYear();
-    calendar.changeLocale('en');
+//  calendar.toNextMonth();
+//  calendar.toNextYear();
+//  calendar.toPrevYear();
+//  calendar.changeLocale('en');
 };
 ```
 

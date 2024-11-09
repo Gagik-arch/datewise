@@ -1,19 +1,19 @@
 import Calendar from '../../dist/index.js'
 import { changeWheelStyles } from './utils.ts'
 
-const MONTH_BLOCK_HEIGHT = 84;
+const MONTH_BLOCK_HEIGHT: number = 84;
 
 const calendar = new Calendar()
 
 const weekContainer: HTMLElement | null = document.getElementById('datewise_week_container')
-const dayContainer = document.getElementById('datewise_day_container')
-const monthContainer = document.getElementById('datewise_month_container')
-const monthScrollContainer = document.getElementById(
+const dayContainer: HTMLElement | null = document.getElementById('datewise_day_container')
+const monthContainer: HTMLElement | null = document.getElementById('datewise_month_container')
+const monthScrollContainer: HTMLElement | null = document.getElementById(
     'datewise_month_scroll_container'
 )
-const date = document.getElementById('datewise_date')
-const nextYearBtn = document.getElementById('arrow_right');
-const prevYearBtn = document.getElementById('arrow_left');
+const date: HTMLElement | null = document.getElementById('datewise_date')
+const nextYearBtn: HTMLElement | null = document.getElementById('arrow_right');
+const prevYearBtn: HTMLElement | null = document.getElementById('arrow_left');
 
 calendar.weekDays.forEach((week, i) => {
     const div = document.createElement('div')
@@ -100,7 +100,7 @@ const renderMonths = () => {
 }
 
 monthContainer?.addEventListener('wheel', (e) => {
-    if (!monthScrollContainer) return
+    if (!monthScrollContainer || !date) return
     const delta = -(e.deltaY / Math.abs(e.deltaY))
     const top = Math.max(-(MONTH_BLOCK_HEIGHT * 11), Math.min(y + MONTH_BLOCK_HEIGHT * delta, 0))
     const index = Math.abs(top / MONTH_BLOCK_HEIGHT)
@@ -109,10 +109,13 @@ monthContainer?.addEventListener('wheel', (e) => {
 
     monthScrollContainer.style.transform = `translateY(${top}px)`
     y = top
-    const day = calendar.selected.getDate()
-    const year = calendar.selected.getFullYear()
-
-    calendar.toDate(new Date(year, index, day))
+    const month = calendar.selected.getMonth()
+    const diff = index - month
+    if (diff > 0) {
+        calendar.toNextMonth()
+    } else if (diff < 0) {
+        calendar.toPrevMonth()
+    }
     renderYear()
 })
 console.log(calendar);
@@ -127,10 +130,17 @@ monthScrollContainer?.addEventListener('click', e => {
     monthScrollContainer.style.transform = `translateY(${y}px)`
 
     const index = Math.abs(y / MONTH_BLOCK_HEIGHT),
-        day = calendar.selected.getDate(),
-        year = calendar.selected.getFullYear();
-    calendar.toDate(new Date(year, index, day))
-    date.innerHTML = dateTimeFormat.format(calendar.value).toString()
+        month = calendar.selected.getMonth(),
+        diff = index - month;
+
+    for (let i: number = 0; i < Math.abs(diff); i++) {
+        if (diff > 0) {
+            calendar.toNextMonth()
+        } else if (diff < 0) {
+            calendar.toPrevMonth()
+        }
+    }
+
     renderDays()
 })
 

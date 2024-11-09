@@ -61,7 +61,7 @@ _Calendar_instances = new WeakSet(), _Calendar_initCalendar = function _Calendar
         }
     }
     else {
-        for (let i = 1; i < _currentMonthDaysCount; i++) {
+        for (let i = 1; i <= _currentMonthDaysCount; i++) {
             dates.push(new Day(new Date(year, month, i), __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, new Date(year, month, i))
                 ? 'selected-day'
                 : 'current-month'));

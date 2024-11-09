@@ -18,29 +18,29 @@ class Calendar implements ICalendar {
         this.#generateWithLocale();
         this.days = this.#initCalendar();
     }
-    public toDate(date: Date) {
+    public toDate(date: Date): void {
         if (!date) throw new Error('first argument<date> is required');
         this.selected = date;
         this.value = date;
         this.days = this.#initCalendar();
     }
 
-    public toNextMonth() {
+    public toNextMonth(): void {
         this.selected = this.#getNextMonth(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toPrevMonth() {
+    public toPrevMonth(): void {
         this.selected = this.#getPrevMonth(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toNextYear() {
+    public toNextYear(): void {
         this.selected = this.#getNextYear(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toPrevYear() {
+    public toPrevYear(): void {
         this.selected = this.#getPrevYear(this.selected);
         this.days = this.#initCalendar();
     }
@@ -49,7 +49,7 @@ class Calendar implements ICalendar {
         this.locale = locale;
     }
 
-    #initCalendar() {
+    #initCalendar(): IDay[] {
         const year: number = this.selected.getFullYear();
         const month: number = this.selected.getMonth();
         const dates: IDay[] = [];
@@ -65,12 +65,12 @@ class Calendar implements ICalendar {
         );
 
         if (_firstDayOfWeek > 0) {
-            for (let p = _prevMonthDaysCount - _firstDayOfWeek + 1; p <= _prevMonthDaysCount; p++) {
+            for (let p: number = _prevMonthDaysCount - _firstDayOfWeek + 1; p <= _prevMonthDaysCount; p++) {
                 dates.push(
                     new Day(new Date(year, month - 1, p), 'prev-month')
                 );
             }
-            for (let c = 1; c <= _currentMonthDaysCount; c++) {
+            for (let c: number = 1; c <= _currentMonthDaysCount; c++) {
                 dates.push(
                     new Day(
                         new Date(year, month, c),
@@ -84,7 +84,7 @@ class Calendar implements ICalendar {
                 );
             }
         } else {
-            for (let i = 1; i < _currentMonthDaysCount; i++) {
+            for (let i: number = 1; i <= _currentMonthDaysCount; i++) {
                 dates.push(
                     new Day(
                         new Date(year, month, i),
@@ -106,7 +106,7 @@ class Calendar implements ICalendar {
             end = 42 - dates.length; // 7 : 5 block
         }
 
-        for (let i = 1; i <= end; i++) {
+        for (let i: number = 1; i <= end; i++) {
             dates.push(new Day(new Date(year, month + 1, i), 'next-month'));
         }
 
@@ -118,8 +118,8 @@ class Calendar implements ICalendar {
             new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
         );
 
-        let date = new Date(2024, 8, 29);
-        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
+        let date: Date = new Date(2024, 8, 29);
+        const sunday: Date = new Date(date.setDate(date.getDate() - date.getDay()));
 
         this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
             return new Date(
