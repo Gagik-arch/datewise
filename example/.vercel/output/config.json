@@ -16,11 +16,5 @@
       "status": 308
     }
   ],
-  "overrides": {},
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+  "overrides": {}
 }

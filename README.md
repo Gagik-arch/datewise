@@ -1,5 +1,6 @@
-# DATEWISE
-
+<a href="#">
+    <img src="./datewise.png" width="auto" title="demo">
+</a>
 This project is intended to be consumed for all of type java script projects.
 
 [![Build Status](https://github.com/Gagik-arch/datewise)](https://github.com/Gagik-arch/datewise)

@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-        />
 
-        <title>DATEWISE - calendar module for java script projects</title>
-        <link
-            rel="icon"
-            href="/favicon.ico"
-        />
-        <link
-            rel="shortcut icon"
-            href="/favicon.png"
-        />
-        <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/favicon.png"
-        />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon.png"
-        />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="favicon.png"
-        />
-      <script type="module" crossorigin src="/assets/index-CtgxfPTd.js"></script>
-      <link rel="stylesheet" crossorigin href="/assets/index-B5_Avnpj.css">
-    </head>
-    <body>
-        <div id="root">
-            <div id="left">
-                <img
-                    src="logo.png"
-                    alt="logo"
-                />
-                1
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DATEWISE - calendar module for java script projects</title>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="shortcut icon" href=".favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.png" />
+    <script src="https://unpkg.com/feather-icons"></script>
+  <script type="module" crossorigin src="/assets/index-6gxDEu9I.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BnUchZWq.css">
+</head>
+
+<body>
+    <div id="root">
+        <div id="left">
+            <div id="logo">
+                <img src="logo.png" alt="logo" draggable="false" />
             </div>
-            <div id="right">
-                <div id="block">
-                    <div id="datewise_date"></div>
-                    <div id="datewise_week_container"></div>
-                    <div id="datewise_day_container"></div>
-                </div>
+            <div id="datewise_year_container">
+                <span id="arrow_left">
+                    <i data-feather="chevron-left"></i>
+                </span>
+                <span id="datewise_year"></span>
+                <span id="arrow_right">
+                    <i data-feather="chevron-right"></i>
+                </span>
             </div>
-        </div>
-    </body>
+            <div id="datewise_month_container">
+                <div id="datewise_month_scroll_container"></div>
+            </div>
+        </div>
+        <div id="right">
+            <div id="block">
+                <div id="datewise_date"></div>
+                <div id="datewise_week_container"></div>
+                <div id="datewise_day_container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+
 </html>
