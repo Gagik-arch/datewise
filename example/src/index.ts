@@ -1,3 +1,4 @@
+import { log } from 'console';
 import Calendar from '../../dist/index.js'
 import { changeWheelStyles } from './utils.ts'
 
@@ -77,6 +78,7 @@ const dateTimeFormat = new Intl.DateTimeFormat('en', {
     month: 'short',
     day: 'numeric',
     weekday: 'short',
+    year: 'numeric',
 })
 
 
@@ -119,7 +121,7 @@ console.log(calendar);
 monthScrollContainer?.addEventListener('click', e => {
     const divTarget: HTMLDivElement = (e.target as HTMLDivElement)
     const target: HTMLDivElement | null = divTarget.closest('.datewise_month')
-    if (!target) return
+    if (!target || !date) return
     changeWheelStyles(Number(target.dataset.index))
     y = target.dataset.index ? -target.dataset.index * MONTH_BLOCK_HEIGHT : 0;
 
@@ -129,6 +131,7 @@ monthScrollContainer?.addEventListener('click', e => {
         day = calendar.selected.getDate(),
         year = calendar.selected.getFullYear();
     calendar.toDate(new Date(year, index, day))
+    date.innerHTML = dateTimeFormat.format(calendar.value).toString()
     renderDays()
 })
 
@@ -155,9 +158,9 @@ nextYearBtn?.addEventListener('click', () => {
 dayContainer?.addEventListener('click', e => {
     const divTarget: HTMLDivElement = (e.target as HTMLDivElement)
     const target: HTMLDivElement | null = divTarget.closest('.datewise_day')
-
-    if (!target?.dataset.date) return
+    if (!target?.dataset.date || !date) return
     calendar.toDate(new Date(target.dataset.date))
+    date.innerHTML = dateTimeFormat.format(calendar.value).toString()
     renderDays()
 })
 
