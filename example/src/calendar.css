@@ -23,14 +23,14 @@
 }
 
 #datewise_day_container {
-    grid-template-rows: repeat(6, 6vw);
+    grid-template-rows: repeat(6, 5vw);
     gap: 0 20px;
 }
 
 #datewise_day_container,
 #datewise_week_container {
     display: grid;
-    grid-template-columns: repeat(7, 6vw);
+    grid-template-columns: repeat(7, 5vw);
     gap: 0 20px;
 }
 

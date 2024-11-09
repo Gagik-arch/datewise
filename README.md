@@ -26,6 +26,8 @@ This calendar is intended to be consumed for all of type java script projects.
 
 ```sh
 $ npm install datewise
+
+coming soon in cdnjs
 ```
 
 ## Usage
@@ -74,7 +76,7 @@ btn.onclick = () => {
 
 | keys     | values        |     example      |
 | -------- | ------------- |     --------     |
-| locale   | string        |       'en'       |
+| locale   | string        |     'en-US'      |
 | value    | Date {Object} |    new Date()    |
 | selected | Date {Object} |    new Date()    |
 | months   | string[]      | ["January",...]  |
