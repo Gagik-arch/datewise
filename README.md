@@ -1,4 +1,4 @@
-<a href="https://datewise-35cs4h9lz-gagikarchs-projects.vercel.app" target="_blank">
+<a href="https://datewise-3not01ag0-gagikarchs-projects.vercel.app" target="_blank">
     <img src="./datewise-logo.png" width="auto" title="demo">
 </a>
 
