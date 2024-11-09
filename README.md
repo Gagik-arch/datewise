@@ -4,7 +4,7 @@
 This project is intended to be consumed for all of type java script projects.
 
 [![Build Status](./github-logo.png)](https://github.com/Gagik-arch/datewise)
-[![npm version](./npm-logo.svg)](https://www.npmjs.com/package/datewise)
+[![npm version](./npm-logo.png)](https://www.npmjs.com/package/datewise)
 
 ## Table of contents
 
