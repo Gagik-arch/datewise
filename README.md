@@ -5,6 +5,14 @@ This project is intended to be consumed for all of type java script projects.
 
 [![Build Status](./github-logo.png)](https://github.com/Gagik-arch/datewise)
 [![npm version](./npm-logo.png)](https://www.npmjs.com/package/datewise)
+<span>
+    <a href="https://github.com/Gagik-arch/datewise" title="Build Status">
+        <img src="./github-logo.png" width="auto">
+    </a>
+       <a href="https://www.npmjs.com/package/datewise" title="npm version">
+        <img src="./npm-logo.png" width="auto" >
+    </a>
+</span>
 
 ## Table of contents
 
