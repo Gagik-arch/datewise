@@ -31,14 +31,16 @@ $ npm install datewise
 ## Usage
 
 ```sh
- const calendar:ICalendar = new Calendar()
+import Calendar, { ICalendar, IDay } from 'datewise';
+
+const calendar: ICalendar = new Calendar();
 ```
 
 #### Arguments
 
-| Type          | Default value | example                                            |
-| ------------- | ------------- | -------------------------------------------------- |
-| Date {Object} | new Date()    | const calendar = new Calendar(new Date(2022,7,15)) |
+| Type          | Default value                |      
+| ------------- | --------------------------   |
+| Date {Object} | new Date(),  locale = 'en'   |
 
 #### Methods
 
@@ -58,19 +60,13 @@ const calendar = new Calendar();
 const btn = document.getElementByTabName('button')[0];
 
 btn.onclick = () => {
-    calendar.toDate(new Date(2025, 5, 16), (locale = 'en'));
+    calendar.toDate(new Date(2025, 5, 16), locale = 'en');
 //  calendar.toPrevMonth();
 //  calendar.toNextMonth();
 //  calendar.toNextYear();
 //  calendar.toPrevYear();
 //  calendar.changeLocale('en');
 };
-```
-
-```ts
-import Calendar, { ICalendar, IDay } from 'datewise';
-
-const calendar: ICalendar = new Calendar();
 ```
 
 #### Object
