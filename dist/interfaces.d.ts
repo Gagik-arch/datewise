@@ -3,7 +3,7 @@ export interface IDay {
     status: string;
 }
 export interface ICalendar {
-    value?: Date | null;
+    value: Date;
     locale: string;
     days: IDay[];
     toNextMonth(): void;

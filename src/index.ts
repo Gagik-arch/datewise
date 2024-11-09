@@ -9,12 +9,10 @@ class Calendar implements ICalendar {
     public weekDays: string[] = [];
     selected: Date;
 
-    constructor(date: Date, locale: string) {
-        this.locale = locale || 'en-US';
+    constructor(date: Date = new Date(), locale: string = 'en-US') {
+        this.locale = locale;
 
-        this.selected = new Date(
-            (date || new Date()).setHours(0, 0, 0, 0)
-        );
+        this.selected = new Date(date.setHours(0, 0, 0, 0));
         this.value = this.selected;
 
         this.#generateWithLocale();

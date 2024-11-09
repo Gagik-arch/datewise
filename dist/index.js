@@ -6,12 +6,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var _Calendar_instances, _Calendar_initCalendar, _Calendar_generateWithLocale, _Calendar_daysInMonth, _Calendar_getFirstDayOfWeek, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
 import Day from './day.js';
 class Calendar {
-    constructor(date, locale) {
+    constructor(date = new Date(), locale = 'en-US') {
         _Calendar_instances.add(this);
         this.months = [];
         this.weekDays = [];
-        this.locale = locale || 'en-US';
-        this.selected = new Date((date || new Date()).setHours(0, 0, 0, 0));
+        this.locale = locale;
+        this.selected = new Date(date.setHours(0, 0, 0, 0));
         this.value = this.selected;
         __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_generateWithLocale).call(this);
         this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);

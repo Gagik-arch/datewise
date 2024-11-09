@@ -1,4 +1,3 @@
-import { log } from 'console';
 import Calendar from '../../dist/index.js'
 import { changeWheelStyles } from './utils.ts'
 
