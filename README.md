@@ -1,5 +1,5 @@
 <a href="#">
-    <img src="./datewise.png" width="auto" title="demo">
+    <img src="./datewise-logo.png" width="auto" title="demo">
 </a>
 
 This calendar is intended to be consumed for all of type java script projects.
@@ -40,7 +40,8 @@ const calendar: ICalendar = new Calendar();
 
 | Type          | Default value                |      
 | ------------- | --------------------------   |
-| Date {Object} | new Date(),  locale = 'en'   |
+| Date {Object} | new Date()                   |
+| Date {Object} | locale = 'en-US'             |
 
 #### Methods
 
