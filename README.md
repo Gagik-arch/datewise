@@ -2,7 +2,7 @@
     <img src="./datewise-logo.png" width="auto" title="demo">
 </a>
 
-This calendar is intended to be consumed for all of type java script projects.
+This calendar is intended to be consumed for all of type javascript projects.
 
 <span>
     <a href="https://github.com/Gagik-arch/datewise" title="Build Status">

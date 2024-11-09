@@ -1,7 +1,7 @@
 {
     "name": "datewise",
-    "version": "1.0.1",
-    "description": "Calendar for java script (type script) projects.",
+    "version": "1.0.2",
+    "description": "Calendar for javascript (type script) projects.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "module",
@@ -15,7 +15,7 @@
     "keywords": [
         "datewise",
         "calendar",
-        "java script calendar",
+        "javascript calendar",
         "js calendar",
         "date picker",
         "ts calendar",
