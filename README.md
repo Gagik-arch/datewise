@@ -69,7 +69,7 @@ const calendar = new Calendar();
 const btn = document.getElementByTabName('button')[0];
 
 btn.onclick = () => {
-    calendar.toDate(new Date(2025, 5, 16), 'en');
+    calendar.toDate(new Date(2025, 5, 16));
 //  calendar.toPrevMonth();
 //  calendar.toNextMonth();
 //  calendar.toNextYear();
