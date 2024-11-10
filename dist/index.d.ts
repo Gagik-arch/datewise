@@ -9,11 +9,6 @@ declare class Calendar implements ICalendar {
     weekDays: string[];
     selected: Date;
     constructor(date?: Date, locale?: string);
-    setNextMonth(): void;
-    setPrevMonth(): void;
-    setNextYear(): void;
-    setPrevYear(): void;
-    setDate(date: Date): void;
     toDate(date: Date): void;
     toNextMonth(): void;
     toPrevMonth(): void;

@@ -62,10 +62,15 @@ const renderDays = () => {
         dayContainer.appendChild(parent)
         parent.appendChild(child)
         parent.classList.add('datewise_day')
-        if (day.status === "selected-date") {
-            child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+        const status: string = day.status.replaceAll('-', '_')
+
+        if (status === "selected_date") {
+            child.classList.add(`datewise_${status}`)
         } else {
-            child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+            child.classList.add(`datewise_${status}`)
+        }
+        if (day.isWeekDay()) {
+            child.classList.add(`datewise_weekday`)
         }
 
         parent.dataset.weekday = day.date.getDay().toString()

@@ -3,8 +3,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
-var _Calendar_instances, _Calendar_initCalendar, _Calendar_generateWithLocale, _Calendar_daysInMonth, _Calendar_getFirstDayOfWeek, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
+var _Calendar_instances, _Calendar_initCalendar, _Calendar_generateWithLocale, _Calendar_daysInMonth, _Calendar_getFirstDayOfMonth, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
 import Day from './day.js';
+import { DAY_MS } from './constants';
 class Calendar {
     constructor(date = new Date(), locale = 'en-US') {
         _Calendar_instances.add(this);
@@ -15,21 +16,6 @@ class Calendar {
         this.value = this.selected;
         __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_generateWithLocale).call(this);
         this.days = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_initCalendar).call(this);
-    }
-    setNextMonth() {
-        throw new Error('Method not implemented.');
-    }
-    setPrevMonth() {
-        throw new Error('Method not implemented.');
-    }
-    setNextYear() {
-        throw new Error('Method not implemented.');
-    }
-    setPrevYear() {
-        throw new Error('Method not implemented.');
-    }
-    setDate(date) {
-        throw new Error('Method not implemented.');
     }
     toDate(date) {
         if (!date)
@@ -59,40 +45,18 @@ class Calendar {
     }
 }
 _Calendar_instances = new WeakSet(), _Calendar_initCalendar = function _Calendar_initCalendar() {
-    const year = this.selected.getFullYear();
-    const month = this.selected.getMonth();
-    const dates = [];
-    const _firstDayOfWeek = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_getFirstDayOfWeek).call(this, month + 1, year);
-    const _prevMonthDaysCount = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_daysInMonth).call(this, month, year);
-    const _currentMonthDaysCount = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_daysInMonth).call(this, month + 1, year);
-    if (_firstDayOfWeek > 0) {
-        for (let p = _prevMonthDaysCount - _firstDayOfWeek + 1; p <= _prevMonthDaysCount; p++) {
-            dates.push(new Day(new Date(year, month - 1, p), __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, new Date(year, month - 1, p))
-                ? 'selected-date'
-                : 'prev-month'));
-        }
-        for (let c = 1; c <= _currentMonthDaysCount; c++) {
-            dates.push(new Day(new Date(year, month, c), __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, new Date(year, month, c))
-                ? 'selected-date'
-                : 'current-month'));
-        }
-    }
-    else {
-        for (let i = 1; i <= _currentMonthDaysCount; i++) {
-            dates.push(new Day(new Date(year, month, i), __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, new Date(year, month, i))
-                ? 'selected-date'
-                : 'current-month'));
-        }
-    }
-    const remainder = dates.length % this.weekDays.length;
-    let end = remainder ? this.weekDays.length - remainder : 0;
-    if (dates.length <= 42) {
-        end = 42 - dates.length; // 7 : 5 block
-    }
-    for (let i = 1; i <= end; i++) {
-        dates.push(new Day(new Date(year, month + 1, i), __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, new Date(year, month + 1, i))
-            ? 'selected-date'
-            : 'next-month'));
+    const year = this.selected.getFullYear(), month = this.selected.getMonth(), dates = [], _firstDayOfWeek = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_getFirstDayOfMonth).call(this, month, year), _prevMonthDaysCount = __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_daysInMonth).call(this, month, year), startDate = new Date(year, month - 1, _prevMonthDaysCount - _firstDayOfWeek + 1);
+    for (let i = 0; i < 42; i++) {
+        const date = new Date(startDate.getTime() + DAY_MS * i);
+        const isCurrentMonth = date.getMonth() === month;
+        const isNextMonth = date.getMonth() === month + 1;
+        dates.push(new Day(date, __classPrivateFieldGet(this, _Calendar_instances, "m", _Calendar_compareTwoDates).call(this, this.value, date)
+            ? 'selected-date' :
+            isCurrentMonth ?
+                'current-month' :
+                isNextMonth ?
+                    'next-month' :
+                    'prev-month'));
     }
     return dates;
 }, _Calendar_generateWithLocale = function _Calendar_generateWithLocale() {
@@ -106,16 +70,16 @@ _Calendar_instances = new WeakSet(), _Calendar_initCalendar = function _Calendar
     });
 }, _Calendar_daysInMonth = function _Calendar_daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
-}, _Calendar_getFirstDayOfWeek = function _Calendar_getFirstDayOfWeek(month, year) {
-    return new Date(`${year}-${month}-01`).getDay();
+}, _Calendar_getFirstDayOfMonth = function _Calendar_getFirstDayOfMonth(month, year) {
+    return new Date(year, month, 1).getDay();
 }, _Calendar_getPrevMonth = function _Calendar_getPrevMonth(date) {
     return new Date(date.getFullYear(), date.getMonth() - 1, 1);
 }, _Calendar_getNextMonth = function _Calendar_getNextMonth(date) {
     return new Date(date.getFullYear(), date.getMonth() + 1, 1);
 }, _Calendar_getPrevYear = function _Calendar_getPrevYear(date) {
-    return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+    return new Date(date.getFullYear() - 1, date.getMonth(), 1);
 }, _Calendar_getNextYear = function _Calendar_getNextYear(date) {
-    return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+    return new Date(date.getFullYear() + 1, date.getMonth(), 1);
 }, _Calendar_compareTwoDates = function _Calendar_compareTwoDates(date1, date2) {
     return date1.getTime() === date2.getTime();
 };

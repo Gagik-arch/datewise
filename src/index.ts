@@ -1,6 +1,7 @@
 import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
 import { type TDateStatus } from './types';
+import { DAY_MS } from './constants'
 
 class Calendar implements ICalendar {
     public value: Date;
@@ -18,21 +19,6 @@ class Calendar implements ICalendar {
 
         this.#generateWithLocale();
         this.days = this.#initCalendar();
-    }
-    setNextMonth(): void {
-        throw new Error('Method not implemented.');
-    }
-    setPrevMonth(): void {
-        throw new Error('Method not implemented.');
-    }
-    setNextYear(): void {
-        throw new Error('Method not implemented.');
-    }
-    setPrevYear(): void {
-        throw new Error('Method not implemented.');
-    }
-    setDate(date: Date): void {
-        throw new Error('Method not implemented.');
     }
 
     public toDate(date: Date): void {
@@ -67,81 +53,38 @@ class Calendar implements ICalendar {
     }
 
     #initCalendar(): IDay[] {
-        const year: number = this.selected.getFullYear();
-        const month: number = this.selected.getMonth();
-        const dates: IDay[] = [];
-        const _firstDayOfWeek: number = this.#getFirstDayOfWeek(
-            month + 1,
-            year
-        );
+        const year: number = this.selected.getFullYear(),
+            month: number = this.selected.getMonth(),
+            dates: IDay[] = [],
+            _firstDayOfWeek: number = this.#getFirstDayOfMonth(
+                month,
+                year
+            ),
+            _prevMonthDaysCount: number = this.#daysInMonth(month, year),
+            startDate: Date = new Date(
+                year,
+                month - 1,
+                _prevMonthDaysCount - _firstDayOfWeek + 1
+            );
 
-        const _prevMonthDaysCount: number = this.#daysInMonth(month, year);
-        const _currentMonthDaysCount: number = this.#daysInMonth(
-            month + 1,
-            year
-        );
-
-        if (_firstDayOfWeek > 0) {
-            for (let p: number = _prevMonthDaysCount - _firstDayOfWeek + 1; p <= _prevMonthDaysCount; p++) {
-                dates.push(
-                    new Day(new Date(year, month - 1, p),
-                        this.#compareTwoDates(
-                            this.value,
-                            new Date(year, month - 1, p)
-                        )
-                            ? 'selected-date'
-                            : 'prev-month'
-                    )
-                );
-            }
-            for (let c: number = 1; c <= _currentMonthDaysCount; c++) {
-                dates.push(
-                    new Day(
-                        new Date(year, month, c),
-                        this.#compareTwoDates(
-                            this.value,
-                            new Date(year, month, c)
-                        )
-                            ? 'selected-date'
-                            : 'current-month'
-                    )
-                );
-            }
-        } else {
-            for (let i: number = 1; i <= _currentMonthDaysCount; i++) {
-                dates.push(
-                    new Day(
-                        new Date(year, month, i),
-                        this.#compareTwoDates(
-                            this.value,
-                            new Date(year, month, i)
-                        )
-                            ? 'selected-date'
-                            : 'current-month'
-                    )
-                );
-            }
-        }
-
-        const remainder: number = dates.length % this.weekDays.length;
-        let end: number = remainder ? this.weekDays.length - remainder : 0;
-
-        if (dates.length <= 42) {
-            end = 42 - dates.length; // 7 : 5 block
-        }
-
-        for (let i: number = 1; i <= end; i++) {
-            dates.push(new Day(
-                new Date(year, month + 1, i),
-                this.#compareTwoDates(
+        for (let i: number = 0; i < 42; i++) {
+            const date: Date = new Date(startDate.getTime() + DAY_MS * i)
+            const isCurrentMonth: boolean = date.getMonth() === month
+            const isNextMonth: boolean = date.getMonth() === month + 1
+            dates.push(
+                new Day(date, this.#compareTwoDates(
                     this.value,
-                    new Date(year, month + 1, i)
+                    date
                 )
-                    ? 'selected-date'
-                    : 'next-month'
-            ));
+                    ? 'selected-date' :
+                    isCurrentMonth ?
+                        'current-month' :
+                        isNextMonth ?
+                            'next-month' :
+                            'prev-month'
+                )
+            );
         }
-
         return dates;
     }
 
@@ -168,8 +111,8 @@ class Calendar implements ICalendar {
         return new Date(year, month, 0).getDate();
     }
 
-    #getFirstDayOfWeek(month: number, year: number): number {
-        return new Date(`${year}-${month}-01`).getDay();
+    #getFirstDayOfMonth(month: number, year: number): number {
+        return new Date(year, month, 1).getDay();
     }
 
     #getPrevMonth(date: Date): Date {
