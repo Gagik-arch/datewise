@@ -159,7 +159,7 @@ prevYearBtn?.addEventListener('click', () => {
 })
 
 nextYearBtn?.addEventListener('click', () => {
-    calendar.toNextMonth()
+    calendar.toNextYear()
     renderDays()
     renderYear()
 })
