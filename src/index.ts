@@ -71,6 +71,7 @@ class Calendar implements ICalendar {
             const date: Date = new Date(startDate.getTime() + DAY_MS * i)
             const isCurrentMonth: boolean = date.getMonth() === month
             const isNextMonth: boolean = date.getMonth() === month + 1
+
             dates.push(
                 new Day(date, this.#compareTwoDates(
                     this.value,

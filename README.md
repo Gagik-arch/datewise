@@ -33,7 +33,7 @@ coming soon in cdnjs
 ## Usage
 
 ```sh
-import Calendar, { ICalendar, IDay } from 'datewise';
+import Calendar, { ICalendar, IDay,TDateStatus } from 'datewise';
 
 const calendar: ICalendar = new Calendar();
 ```
@@ -43,9 +43,9 @@ const calendar: ICalendar = new Calendar();
 | Type          | Default value                |      
 | ------------- | --------------------------   |
 | Date {Object} | new Date()                   |
-| Date {Object} | locale = 'en-US'             |
+| Intl locales  | 'en-US'                      |
 
-#### Methods
+#### Calendar Methods
 
 | Method      | argument      | return type  |
 | ----------- | ------------- | ------------ |
@@ -56,9 +56,15 @@ const calendar: ICalendar = new Calendar();
 | toPrevYear  | none          |     void     |
 | changeLocale| locale:string |     void     |
 
-Example:
+#### Day Methods
 
+| Method      | argument      | return type  |
+| ----------- | ------------- | ------------ |
+| isWeekDay   | none          |   boolean    |
+
+Example:
 ```js
+
 const calendar = new Calendar();
 const btn = document.getElementByTabName('button')[0];
 
@@ -69,10 +75,12 @@ btn.onclick = () => {
 //  calendar.toNextYear();
 //  calendar.toPrevYear();
 //  calendar.changeLocale('en');
+
+    calendar.days[0].isWeekDay() // boolean
 };
 ```
 
-#### Object
+#### Calendar Object
 
 | keys     | values        |     example      |
 | -------- | ------------- |     --------     |
@@ -83,6 +91,15 @@ btn.onclick = () => {
 | weekDays | string[]      | ["Saturday",...] |
 | days     | Day[]         |     new Day()    |
  
+#### Day Object
+
+| keys     | values        |     example      |
+| -------- | ------------- |     --------     |
+| date     | Date {Object} |    new Date()    |
+| status   | TDateStatus   | 'current-month'  |
+
+ 
+
 ## Author
 
 -   **Gagik** - _Initial work_ - [Gagik-arch](https://github.com/Gagik-arch)

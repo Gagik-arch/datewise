@@ -136,12 +136,12 @@
 }
 
 .datewise_weekday {
-    &:not(.datewise_current_month, .datewise_today) {
-        color: rgb(201, 165, 154);
+    &:not(.datewise_current_month, .datewise_today, .datewise_selected_date) {
+        color: rgba(201, 165, 154, 0.5);
     }
 
     &.datewise_current_month:not(.datewise_today) {
-        color: rgb(185, 88, 58);
+        color: rgba(185, 88, 58, 0.5);
     }
 }
 
