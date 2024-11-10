@@ -1,7 +1,7 @@
 import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
 import { type TDateStatus } from './types';
-import { DAY_MS } from './constants'
+import { DAY_MS } from './constants.js'
 
 class Calendar implements ICalendar {
     public value: Date;

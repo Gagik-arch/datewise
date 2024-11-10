@@ -5,7 +5,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _Calendar_instances, _Calendar_initCalendar, _Calendar_generateWithLocale, _Calendar_daysInMonth, _Calendar_getFirstDayOfMonth, _Calendar_getPrevMonth, _Calendar_getNextMonth, _Calendar_getPrevYear, _Calendar_getNextYear, _Calendar_compareTwoDates;
 import Day from './day.js';
-import { DAY_MS } from './constants';
+import { DAY_MS } from './constants.js';
 class Calendar {
     constructor(date = new Date(), locale = 'en-US') {
         _Calendar_instances.add(this);
