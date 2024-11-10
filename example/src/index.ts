@@ -11,6 +11,7 @@ const monthContainer: HTMLElement | null = document.getElementById('datewise_mon
 const monthScrollContainer: HTMLElement | null = document.getElementById(
     'datewise_month_scroll_container'
 )
+const yearContainer: HTMLElement | null = document.getElementById('datewise_year')
 const date: HTMLElement | null = document.getElementById('datewise_date')
 const nextYearBtn: HTMLElement | null = document.getElementById('arrow_right');
 const prevYearBtn: HTMLElement | null = document.getElementById('arrow_left');
@@ -54,19 +55,24 @@ calendar.weekDays.forEach((week, i) => {
 const renderDays = () => {
     if (!dayContainer) return
     dayContainer.innerHTML = ''
+
     calendar.days.forEach((day) => {
         const parent = document.createElement('div')
         const child = document.createElement('div')
         dayContainer.appendChild(parent)
         parent.appendChild(child)
         parent.classList.add('datewise_day')
-        child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+        if (day.status === "selected-date") {
+            child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+        } else {
+            child.classList.add(`datewise_${day.status.replaceAll('-', '_')}`)
+        }
 
         parent.dataset.weekday = day.date.getDay().toString()
         parent.dataset.date = day.date.toString()
         child.innerHTML = day.date.getDate().toString()
-        let today = new Date()
-        today.setHours(0, 0, 0, 0)
+        const today = new Date(new Date().setHours(0, 0, 0, 0))
+
         if (today.getTime() === day.date.getTime()) {
             child.classList.add('datewise_today')
         }
@@ -79,10 +85,6 @@ const dateTimeFormat = new Intl.DateTimeFormat('en', {
     weekday: 'short',
     year: 'numeric',
 })
-
-
-let //isDowned: boolean = false,
-    y: number = -calendar.value.getMonth() * MONTH_BLOCK_HEIGHT;
 
 const renderMonths = () => {
     calendar.months.forEach((month, index) => {
@@ -98,6 +100,8 @@ const renderMonths = () => {
         div.dataset.index = index.toString()
     })
 }
+
+let y: number = -calendar.value.getMonth() * MONTH_BLOCK_HEIGHT;
 
 monthContainer?.addEventListener('wheel', (e) => {
     if (!monthScrollContainer || !date) return
@@ -124,14 +128,14 @@ monthScrollContainer?.addEventListener('click', e => {
     const divTarget: HTMLDivElement = (e.target as HTMLDivElement)
     const target: HTMLDivElement | null = divTarget.closest('.datewise_month')
     if (!target || !date) return
-    changeWheelStyles(Number(target.dataset.index))
-    y = target.dataset.index ? -target.dataset.index * MONTH_BLOCK_HEIGHT : 0;
 
+    y = target.dataset.index ? -target.dataset.index * MONTH_BLOCK_HEIGHT : 0;
     monthScrollContainer.style.transform = `translateY(${y}px)`
 
-    const index: number = Math.abs(y / MONTH_BLOCK_HEIGHT),
+    const index: number = Number(target.dataset.index),
         month: number = calendar.selected.getMonth(),
         diff: number = index - month;
+    changeWheelStyles(index)
 
     for (let i: number = 0; i < Math.abs(diff); i++) {
         if (diff > 0) {
@@ -140,17 +144,8 @@ monthScrollContainer?.addEventListener('click', e => {
             calendar.toPrevMonth()
         }
     }
-
     renderDays()
 })
-
-// monthContainer?.addEventListener('mousedown', () => {
-//     isDowned = true
-// })
-
-// window.addEventListener('mouseup', () => {
-//     isDowned = false
-// })
 
 prevYearBtn?.addEventListener('click', () => {
     calendar.toPrevYear()
@@ -159,7 +154,7 @@ prevYearBtn?.addEventListener('click', () => {
 })
 
 nextYearBtn?.addEventListener('click', () => {
-    calendar.toNextYear()
+    calendar.toNextMonth()
     renderDays()
     renderYear()
 })
@@ -167,17 +162,21 @@ nextYearBtn?.addEventListener('click', () => {
 dayContainer?.addEventListener('click', e => {
     const divTarget: HTMLDivElement = (e.target as HTMLDivElement)
     const target: HTMLDivElement | null = divTarget.closest('.datewise_day')
-    if (!target?.dataset.date || !date) return
+    if (!target?.dataset.date || !date || !monthScrollContainer || !yearContainer) return
+
     calendar.toDate(new Date(target.dataset.date))
     date.innerHTML = dateTimeFormat.format(calendar.value).toString()
     renderDays()
+    y = -calendar.value.getMonth() * MONTH_BLOCK_HEIGHT
+    monthScrollContainer.style.transform = `translateY(${y}px)`
+    changeWheelStyles(calendar.value.getMonth())
+    yearContainer.innerHTML = calendar.selected.getFullYear().toString()
 })
 
 
 const renderYear = () => {
-    const year: HTMLElement | null = document.getElementById('datewise_year')
-    if (!year) return
-    year.innerHTML = calendar.selected.getFullYear().toString()
+    if (!yearContainer) return
+    yearContainer.innerHTML = calendar.selected.getFullYear().toString()
     renderDays()
 }
 

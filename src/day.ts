@@ -1,10 +1,11 @@
 import { IDay } from './interfaces';
+import { TDateStatus } from './types';
 
 class Day implements IDay {
     public date: Date;
-    public status: string;
+    public status: TDateStatus;
 
-    constructor(date: Date, status: string) {
+    constructor(date: Date, status: TDateStatus) {
         this.date = date;
         this.status = status;
     }

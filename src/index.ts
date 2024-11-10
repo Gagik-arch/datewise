@@ -1,5 +1,6 @@
 import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
+import { type TDateStatus } from './types';
 
 class Calendar implements ICalendar {
     public value: Date;
@@ -7,7 +8,7 @@ class Calendar implements ICalendar {
     public days: IDay[];
     public months: string[] = [];
     public weekDays: string[] = [];
-    selected: Date;
+    public selected: Date;
 
     constructor(date: Date = new Date(), locale: string = 'en-US') {
         this.locale = locale;
@@ -18,6 +19,22 @@ class Calendar implements ICalendar {
         this.#generateWithLocale();
         this.days = this.#initCalendar();
     }
+    setNextMonth(): void {
+        throw new Error('Method not implemented.');
+    }
+    setPrevMonth(): void {
+        throw new Error('Method not implemented.');
+    }
+    setNextYear(): void {
+        throw new Error('Method not implemented.');
+    }
+    setPrevYear(): void {
+        throw new Error('Method not implemented.');
+    }
+    setDate(date: Date): void {
+        throw new Error('Method not implemented.');
+    }
+
     public toDate(date: Date): void {
         if (!date) throw new Error('first argument<date> is required');
         this.selected = date;
@@ -67,7 +84,14 @@ class Calendar implements ICalendar {
         if (_firstDayOfWeek > 0) {
             for (let p: number = _prevMonthDaysCount - _firstDayOfWeek + 1; p <= _prevMonthDaysCount; p++) {
                 dates.push(
-                    new Day(new Date(year, month - 1, p), 'prev-month')
+                    new Day(new Date(year, month - 1, p),
+                        this.#compareTwoDates(
+                            this.value,
+                            new Date(year, month - 1, p)
+                        )
+                            ? 'selected-date'
+                            : 'prev-month'
+                    )
                 );
             }
             for (let c: number = 1; c <= _currentMonthDaysCount; c++) {
@@ -78,7 +102,7 @@ class Calendar implements ICalendar {
                             this.value,
                             new Date(year, month, c)
                         )
-                            ? 'selected-day'
+                            ? 'selected-date'
                             : 'current-month'
                     )
                 );
@@ -92,7 +116,7 @@ class Calendar implements ICalendar {
                             this.value,
                             new Date(year, month, i)
                         )
-                            ? 'selected-day'
+                            ? 'selected-date'
                             : 'current-month'
                     )
                 );
@@ -107,7 +131,15 @@ class Calendar implements ICalendar {
         }
 
         for (let i: number = 1; i <= end; i++) {
-            dates.push(new Day(new Date(year, month + 1, i), 'next-month'));
+            dates.push(new Day(
+                new Date(year, month + 1, i),
+                this.#compareTwoDates(
+                    this.value,
+                    new Date(year, month + 1, i)
+                )
+                    ? 'selected-date'
+                    : 'next-month'
+            ));
         }
 
         return dates;
@@ -132,48 +164,48 @@ class Calendar implements ICalendar {
         });
     }
 
-    #daysInMonth(month: number, year: number) {
+    #daysInMonth(month: number, year: number): number {
         return new Date(year, month, 0).getDate();
     }
 
-    #getFirstDayOfWeek(month: number, year: number) {
+    #getFirstDayOfWeek(month: number, year: number): number {
         return new Date(`${year}-${month}-01`).getDay();
     }
 
-    #getPrevMonth(date: Date) {
+    #getPrevMonth(date: Date): Date {
         return new Date(
             date.getFullYear(),
             date.getMonth() - 1,
-            date.getDate()
+            1
         );
     }
 
-    #getNextMonth(date: Date) {
+    #getNextMonth(date: Date): Date {
         return new Date(
             date.getFullYear(),
             date.getMonth() + 1,
-            date.getDate()
+            1
         );
     }
 
-    #getPrevYear(date: Date) {
+    #getPrevYear(date: Date): Date {
         return new Date(
             date.getFullYear() - 1,
             date.getMonth(),
-            date.getDate()
+            1
         );
     }
-    #getNextYear(date: Date) {
+    #getNextYear(date: Date): Date {
         return new Date(
             date.getFullYear() + 1,
             date.getMonth(),
-            date.getDate()
+            1
         );
     }
-    #compareTwoDates(date1: Date, date2: Date) {
+    #compareTwoDates(date1: Date, date2: Date): boolean {
         return date1.getTime() === date2.getTime();
     }
 }
 
-export type { ICalendar, IDay };
+export type { ICalendar, IDay, TDateStatus };
 export default Calendar;

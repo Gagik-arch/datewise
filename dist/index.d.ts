@@ -1,4 +1,5 @@
 import { IDay, ICalendar } from './interfaces';
+import { type TDateStatus } from './types';
 declare class Calendar implements ICalendar {
     #private;
     value: Date;
@@ -8,6 +9,11 @@ declare class Calendar implements ICalendar {
     weekDays: string[];
     selected: Date;
     constructor(date?: Date, locale?: string);
+    setNextMonth(): void;
+    setPrevMonth(): void;
+    setNextYear(): void;
+    setPrevYear(): void;
+    setDate(date: Date): void;
     toDate(date: Date): void;
     toNextMonth(): void;
     toPrevMonth(): void;
@@ -15,5 +21,5 @@ declare class Calendar implements ICalendar {
     toPrevYear(): void;
     changeLocale(locale: string): void;
 }
-export type { ICalendar, IDay };
+export type { ICalendar, IDay, TDateStatus };
 export default Calendar;

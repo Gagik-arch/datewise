@@ -1,6 +1,7 @@
+import { type TDateStatus } from "./types";
 export interface IDay {
     date: Date;
-    status: string;
+    status: TDateStatus;
 }
 export interface ICalendar {
     value: Date;

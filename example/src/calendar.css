@@ -86,8 +86,8 @@
     padding: 1vw 1.4vw;
 }
 
-.datewise_selected_day::before,
-.datewise_selected_day::after {
+.datewise_selected_date::before,
+.datewise_selected_date::after {
     content: '';
     position: absolute;
     background-color: var(--light-blue-t0-5);
@@ -97,7 +97,7 @@
     transition: all 300ms linear;
 }
 
-.datewise_selected_day {
+.datewise_selected_date {
     background-color: var(--blue);
     color: white;
     display: flex;
@@ -109,11 +109,11 @@
     }
 }
 
-.datewise_selected_day ::before {
+.datewise_selected_date ::before {
     -webkit-animation: waves 2.5s infinite linear 0.1s;
     animation: waves 2.5s infinite linear 0.1s;
 }
-.datewise_selected_day::after {
+.datewise_selected_date::after {
     -webkit-animation: waves 2.5s infinite linear 1.3s forwards;
     animation: waves 2.5s infinite linear 1.3s forwards;
 }
