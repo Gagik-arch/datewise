@@ -27,7 +27,8 @@ This calendar is intended to be consumed for all of type javascript projects.
 ```sh
 $ npm install datewise
 
-We need stars (🌟🌟🌟🌟) to make available the package in cdnjs please add star in git repository thank you all.
+We need stars (🌟🌟🌟🌟) to make available the package in cdnjs
+please add star in git repository thank you all.
 ```
 
 ## Usage
