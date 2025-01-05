@@ -69,7 +69,8 @@ const renderDays = () => {
         } else {
             child.classList.add(`datewise_${status}`)
         }
-        if (day.isWeekDay()) {
+        console.log(day.isWeekend());
+        if (day.isWeekend()) {
             child.classList.add(`datewise_weekday`)
         }
 
