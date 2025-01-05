@@ -27,13 +27,13 @@ This calendar is intended to be consumed for all of type javascript projects.
 ```sh
 $ npm install datewise
 
-We need stars (🌟🌟🌟🌟) to make available the package in cdnjs please add star in git repository
+We need stars (🌟🌟🌟🌟) to make available the package in cdnjs please add star in git repository thank you all.
 ```
 
 ## Usage
 
 ```sh
-import Calendar, { ICalendar, IDay,TDateStatus } from 'datewise';
+import Calendar, { ICalendar, IDay } from 'datewise';
 
 const calendar: ICalendar = new Calendar();
 ```
