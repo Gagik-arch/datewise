@@ -1,5 +1,4 @@
 import { IDay, ICalendar } from './interfaces';
-import { type TDateStatus } from './types';
 declare class Calendar implements ICalendar {
     #private;
     value: Date;
@@ -16,5 +15,5 @@ declare class Calendar implements ICalendar {
     toPrevYear(): void;
     changeLocale(locale: string): void;
 }
-export type { ICalendar, IDay, TDateStatus };
+export type { ICalendar, IDay };
 export default Calendar;

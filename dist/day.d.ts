@@ -4,6 +4,6 @@ declare class Day implements IDay {
     date: Date;
     status: TDateStatus;
     constructor(date: Date, status: TDateStatus);
-    isWeekDay(): boolean;
+    isWeekend(): boolean;
 }
 export default Day;

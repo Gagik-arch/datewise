@@ -1,6 +1,5 @@
 import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
-import { type TDateStatus } from './types';
 import { DAY_MS } from './constants.js'
 
 class Calendar implements ICalendar {
@@ -151,5 +150,5 @@ class Calendar implements ICalendar {
     }
 }
 
-export type { ICalendar, IDay, TDateStatus };
+export type { ICalendar, IDay };
 export default Calendar;

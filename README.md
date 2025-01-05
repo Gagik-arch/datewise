@@ -27,7 +27,7 @@ This calendar is intended to be consumed for all of type javascript projects.
 ```sh
 $ npm install datewise
 
-coming soon in cdnjs
+We need stars (🌟🌟🌟🌟) to make available the package in cdnjs please add star in git repository
 ```
 
 ## Usage
@@ -60,7 +60,7 @@ const calendar: ICalendar = new Calendar();
 
 | Method      | argument      | return type  |
 | ----------- | ------------- | ------------ |
-| isWeekDay   | none          |   boolean    |
+| isWeekEnd   | none          |   boolean    |
 
 Example:
 ```js
@@ -69,14 +69,14 @@ const calendar = new Calendar();
 const btn = document.getElementByTabName('button')[0];
 
 btn.onclick = () => {
-    calendar.toDate(new Date(2025, 5, 16));
+    calendar.toDate(new Date(2025, 5, 16), 'en');
 //  calendar.toPrevMonth();
 //  calendar.toNextMonth();
 //  calendar.toNextYear();
 //  calendar.toPrevYear();
 //  calendar.changeLocale('en');
 
-    calendar.days[0].isWeekDay() // boolean
+    calendar.days[0].isWeekEnd() // boolean
 };
 ```
 
