@@ -1,8 +1,8 @@
-import { TDateStatus } from './types';
+import { TDayStatus } from './types';
 declare class Day {
     date: Date;
-    status: TDateStatus;
-    constructor(date: Date, status: TDateStatus);
+    status: TDayStatus;
+    constructor(date: Date, status: TDayStatus);
     isWeekend(): boolean;
 }
 export default Day;

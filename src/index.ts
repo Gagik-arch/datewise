@@ -16,38 +16,38 @@ class Calendar {
         this.value = this.selected;
 
         this.#generateWithLocale();
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     }
 
-    public toDate(date: Date): void {
+    public toDate = (date: Date): Date => {
         if (!date) throw new Error('first argument<Date> is required');
         this.selected = date;
         this.value = date;
-        this.days = this.initCalendar();
-    }
-
+        this.days = this.#initCalendar();
+        return this.value;
+    };
     public toNextMonth = (): void => {
         this.selected = this.#getNextMonth(this.selected);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     };
     public toPrevMonth = ():void => {
         this.selected = this.#getPrevMonth(this.selected);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     };
     public toNextYear = (): void => {
         this.selected = this.#getNextYear(this.selected);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     };
     public toPrevYear = (): void => {
         this.selected = this.#getPrevYear(this.selected);
-        this.days = this.initCalendar();
+        this.days = this.#initCalendar();
     };
 
     public changeLocale(locale: string): void {
         this.locale = locale;
     }
 
-    initCalendar(): Day[] {
+    #initCalendar(): Day[] {
         const year: number = this.selected.getFullYear(),
             month: number = this.selected.getMonth(),
             dates: Day[] = [],
@@ -62,25 +62,17 @@ class Calendar {
                 _prevMonthDaysCount - _firstDayOfWeek + 1
             );
 
-        const dateNow = new Date();
-
         for (let i = 0; i < 42; i++) {
             const date: Date = new Date(startDate.getTime() + DAY_MS * i);
             const isCurrentMonth: boolean = date.getMonth() === month;
             const isNextMonth: boolean = date.getMonth() === month + 1;
 
             dates.push(
-                new Day(date,
-                    this.#compareTwoDates(
-                        new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate()),
-                        date
-                    )
-                        ? 'selected-date'
-                        : isCurrentMonth
-                            ? 'current-month'
-                            : isNextMonth
-                                ? 'next-month'
-                                : 'prev-month')
+                new Day(date, isCurrentMonth
+                    ? 'current-month'
+                    : isNextMonth
+                        ? 'next-month'
+                        : 'prev-month')
             );
         }
         return dates;
@@ -145,10 +137,6 @@ class Calendar {
             date.getMonth(),
             1
         );
-    }
-
-    #compareTwoDates(date1: Date, date2: Date): boolean {
-        return date1.getTime() === date2.getTime();
     }
 }
 export default Calendar;

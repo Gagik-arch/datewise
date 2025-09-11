@@ -1,10 +1,10 @@
-import { TDateStatus } from './types';
+import { TDayStatus } from './types';
 
 class Day  {
     public date: Date;
-    public status: TDateStatus;
+    public status: TDayStatus;
 
-    constructor(date: Date, status: TDateStatus) {
+    constructor(date: Date, status: TDayStatus) {
         this.date = date;
         this.status = status;
     }

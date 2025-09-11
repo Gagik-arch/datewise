@@ -8,12 +8,11 @@ declare class Calendar {
     weekDays: string[];
     selected: Date;
     constructor(date?: Date, locale?: string);
-    toDate(date: Date): void;
+    toDate: (date: Date) => Date;
     toNextMonth: () => void;
     toPrevMonth: () => void;
     toNextYear: () => void;
     toPrevYear: () => void;
     changeLocale(locale: string): void;
-    initCalendar(): Day[];
 }
 export default Calendar;
