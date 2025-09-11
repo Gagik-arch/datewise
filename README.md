@@ -34,9 +34,9 @@ please add star in git repository thank you all.
 ## Usage
 
 ```sh
-import Calendar, { ICalendar, IDay } from 'datewise';
+import Calendar from 'datewise';
 
-const calendar: ICalendar = new Calendar();
+const calendar = new Calendar();
 ```
 
 #### Arguments

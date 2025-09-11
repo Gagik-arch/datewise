@@ -1,4 +1,4 @@
-import Calendar from '../../dist/index.js'
+import Calendar from '../../src/'
 import { changeWheelStyles } from './utils.ts'
 
 const MONTH_BLOCK_HEIGHT: number = 84;

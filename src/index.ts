@@ -1,11 +1,10 @@
-import { IDay, ICalendar } from './interfaces';
 import Day from './day.js';
 import { DAY_MS } from './constants.js'
 
-class Calendar implements ICalendar {
+class Calendar   {
     public value: Date;
     public locale: string;
-    public days: IDay[];
+    public days: Day[];
     public months: string[] = [];
     public weekDays: string[] = [];
     public selected: Date;
@@ -20,41 +19,41 @@ class Calendar implements ICalendar {
         this.days = this.#initCalendar();
     }
 
-    public toDate(date: Date): void {
+    public toDate=(date: Date): void => {
         if (!date) throw new Error('first argument<date> is required');
         this.selected = date;
         this.value = date;
         this.days = this.#initCalendar();
     }
 
-    public toNextMonth(): void {
+    public toNextMonth = (): void => {
         this.selected = this.#getNextMonth(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toPrevMonth(): void {
+    public toPrevMonth = (): void => {
         this.selected = this.#getPrevMonth(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toNextYear(): void {
+    public toNextYear = (): void => {
         this.selected = this.#getNextYear(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public toPrevYear(): void {
+    public toPrevYear = (): void => {
         this.selected = this.#getPrevYear(this.selected);
         this.days = this.#initCalendar();
     }
 
-    public changeLocale(locale: string): void {
+    public changeLocale = (locale: string): void => {
         this.locale = locale;
     }
 
-    #initCalendar(): IDay[] {
+    #initCalendar = (): Day[] => {
         const year: number = this.selected.getFullYear(),
             month: number = this.selected.getMonth(),
-            dates: IDay[] = [],
+            dates: Day[] = [],
             _firstDayOfWeek: number = this.#getFirstDayOfMonth(
                 month,
                 year
@@ -73,7 +72,7 @@ class Calendar implements ICalendar {
 
             dates.push(
                 new Day(date, this.#compareTwoDates(
-                    this.value,
+                    new Date(),
                     date
                 )
                     ? 'selected-date' :
@@ -88,7 +87,7 @@ class Calendar implements ICalendar {
         return dates;
     }
 
-    #generateWithLocale(): void {
+    #generateWithLocale = (): void => {
         this.months = Array.from({ length: 12 }, (_, i: number) =>
             new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
         );
@@ -107,15 +106,15 @@ class Calendar implements ICalendar {
         });
     }
 
-    #daysInMonth(month: number, year: number): number {
+    #daysInMonth = (month: number, year: number): number => {
         return new Date(year, month, 0).getDate();
     }
 
-    #getFirstDayOfMonth(month: number, year: number): number {
+    #getFirstDayOfMonth = (month: number, year: number): number => {
         return new Date(year, month, 1).getDay();
     }
 
-    #getPrevMonth(date: Date): Date {
+    #getPrevMonth = (date: Date): Date => {
         return new Date(
             date.getFullYear(),
             date.getMonth() - 1,
@@ -123,7 +122,7 @@ class Calendar implements ICalendar {
         );
     }
 
-    #getNextMonth(date: Date): Date {
+    #getNextMonth = (date: Date): Date => {
         return new Date(
             date.getFullYear(),
             date.getMonth() + 1,
@@ -131,24 +130,23 @@ class Calendar implements ICalendar {
         );
     }
 
-    #getPrevYear(date: Date): Date {
+    #getPrevYear = (date: Date): Date =>{
         return new Date(
             date.getFullYear() - 1,
             date.getMonth(),
             1
         );
     }
-    #getNextYear(date: Date): Date {
+    #getNextYear = (date: Date): Date => {
         return new Date(
             date.getFullYear() + 1,
             date.getMonth(),
             1
         );
     }
-    #compareTwoDates(date1: Date, date2: Date): boolean {
+    #compareTwoDates = (date1: Date, date2: Date): boolean => {
         return date1.getTime() === date2.getTime();
     }
 }
 
-export type { ICalendar, IDay };
 export default Calendar;

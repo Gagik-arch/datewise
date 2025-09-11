@@ -1,7 +1,6 @@
-import { IDay } from './interfaces';
 import { TDateStatus } from './types';
 
-class Day implements IDay {
+class Day  {
     public date: Date;
     public status: TDateStatus;
 
@@ -9,7 +8,7 @@ class Day implements IDay {
         this.date = date;
         this.status = status;
     }
-    isWeekend(): boolean {
+    public isWeekend(): boolean {
         return this.date.getDay() === 0 || this.date.getDay() === 6
     }
 }

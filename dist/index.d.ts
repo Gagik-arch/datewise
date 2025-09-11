@@ -1,19 +1,18 @@
-import { IDay, ICalendar } from './interfaces';
-declare class Calendar implements ICalendar {
+import Day from './day.js';
+declare class Calendar {
     #private;
     value: Date;
     locale: string;
-    days: IDay[];
+    days: Day[];
     months: string[];
     weekDays: string[];
     selected: Date;
     constructor(date?: Date, locale?: string);
-    toDate(date: Date): void;
-    toNextMonth(): void;
-    toPrevMonth(): void;
-    toNextYear(): void;
-    toPrevYear(): void;
-    changeLocale(locale: string): void;
+    toDate: (date: Date) => void;
+    toNextMonth: () => void;
+    toPrevMonth: () => void;
+    toNextYear: () => void;
+    toPrevYear: () => void;
+    changeLocale: (locale: string) => void;
 }
-export type { ICalendar, IDay };
 export default Calendar;
