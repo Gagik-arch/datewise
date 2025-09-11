@@ -1,6 +1,6 @@
 {
     "name": "datewise",
-    "version": "2.0.9",
+    "version": "2.0.10",
     "description": "Calendar for javascript (type script) projects.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -34,7 +34,6 @@
     "files": [
         "dist",
         "package.json",
-        "README.md",
-        "tsconfig.json"
+        "README.md"
   ]
 }
