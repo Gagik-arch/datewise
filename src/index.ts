@@ -1,7 +1,7 @@
 import Day from './day.js';
 import { DAY_MS } from './constants.js'
 
-class Calendar   {
+class Calendar {
     public value: Date;
     public locale: string;
     public days: Day[];
@@ -9,48 +9,45 @@ class Calendar   {
     public weekDays: string[] = [];
     public selected: Date;
 
-    constructor(date: Date = new Date(), locale: string = 'en-US') {
+    constructor(date: Date = new Date(), locale = 'en-US') {
         this.locale = locale;
 
         this.selected = new Date(date.setHours(0, 0, 0, 0));
         this.value = this.selected;
 
         this.#generateWithLocale();
-        this.days = this.#initCalendar();
+        this.days = this.initCalendar();
     }
 
-    public toDate=(date: Date): void => {
-        if (!date) throw new Error('first argument<date> is required');
+    public toDate(date: Date): void {
+        if (!date) throw new Error('first argument<Date> is required');
         this.selected = date;
         this.value = date;
-        this.days = this.#initCalendar();
+        this.days = this.initCalendar();
     }
 
     public toNextMonth = (): void => {
         this.selected = this.#getNextMonth(this.selected);
-        this.days = this.#initCalendar();
-    }
-
-    public toPrevMonth = (): void => {
+        this.days = this.initCalendar();
+    };
+    public toPrevMonth = ():void => {
         this.selected = this.#getPrevMonth(this.selected);
-        this.days = this.#initCalendar();
-    }
-
+        this.days = this.initCalendar();
+    };
     public toNextYear = (): void => {
         this.selected = this.#getNextYear(this.selected);
-        this.days = this.#initCalendar();
-    }
-
+        this.days = this.initCalendar();
+    };
     public toPrevYear = (): void => {
         this.selected = this.#getPrevYear(this.selected);
-        this.days = this.#initCalendar();
-    }
+        this.days = this.initCalendar();
+    };
 
-    public changeLocale = (locale: string): void => {
+    public changeLocale(locale: string): void {
         this.locale = locale;
     }
 
-    #initCalendar = (): Day[] => {
+    initCalendar(): Day[] {
         const year: number = this.selected.getFullYear(),
             month: number = this.selected.getMonth(),
             dates: Day[] = [],
@@ -65,34 +62,35 @@ class Calendar   {
                 _prevMonthDaysCount - _firstDayOfWeek + 1
             );
 
-        for (let i: number = 0; i < 42; i++) {
-            const date: Date = new Date(startDate.getTime() + DAY_MS * i)
-            const isCurrentMonth: boolean = date.getMonth() === month
-            const isNextMonth: boolean = date.getMonth() === month + 1
+        const dateNow = new Date();
+
+        for (let i = 0; i < 42; i++) {
+            const date: Date = new Date(startDate.getTime() + DAY_MS * i);
+            const isCurrentMonth: boolean = date.getMonth() === month;
+            const isNextMonth: boolean = date.getMonth() === month + 1;
 
             dates.push(
-                new Day(date, this.#compareTwoDates(
-                    new Date(),
-                    date
-                )
-                    ? 'selected-date' :
-                    isCurrentMonth ?
-                        'current-month' :
-                        isNextMonth ?
-                            'next-month' :
-                            'prev-month'
-                )
+                new Day(date,
+                    this.#compareTwoDates(
+                        new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate()),
+                        date
+                    )
+                        ? 'selected-date'
+                        : isCurrentMonth
+                            ? 'current-month'
+                            : isNextMonth
+                                ? 'next-month'
+                                : 'prev-month')
             );
         }
         return dates;
     }
 
-    #generateWithLocale = (): void => {
-        this.months = Array.from({ length: 12 }, (_, i: number) =>
-            new Date(2024, i, 1).toLocaleString(this.locale, { month: 'long' })
-        );
+    #generateWithLocale(): void {
+        this.months = Array.from({ length: 12 }, (_, i: number) => new Date(2024, i, 1)
+            .toLocaleString(this.locale, { month: 'long' }));
 
-        let date: Date = new Date(2024, 8, 29);
+        const date: Date = new Date(2024, 8, 29);
         const sunday: Date = new Date(date.setDate(date.getDate() - date.getDay()));
 
         this.weekDays = Array.from({ length: 7 }, (_, i: number) => {
@@ -100,21 +98,24 @@ class Calendar   {
                 sunday.getFullYear(),
                 sunday.getMonth(),
                 sunday.getDate() + i
-            ).toLocaleString(this.locale, {
-                weekday: 'long',
-            });
+            )
+                .toLocaleString(this.locale, {
+                    weekday: 'long',
+                });
         });
     }
 
-    #daysInMonth = (month: number, year: number): number => {
-        return new Date(year, month, 0).getDate();
+    #daysInMonth(month: number, year: number): number {
+        return new Date(year, month, 0)
+            .getDate();
     }
 
-    #getFirstDayOfMonth = (month: number, year: number): number => {
-        return new Date(year, month, 1).getDay();
+    #getFirstDayOfMonth(month: number, year: number): number {
+        return new Date(year, month, 1)
+            .getDay();
     }
 
-    #getPrevMonth = (date: Date): Date => {
+    #getPrevMonth(date: Date): Date {
         return new Date(
             date.getFullYear(),
             date.getMonth() - 1,
@@ -122,7 +123,7 @@ class Calendar   {
         );
     }
 
-    #getNextMonth = (date: Date): Date => {
+    #getNextMonth(date: Date): Date {
         return new Date(
             date.getFullYear(),
             date.getMonth() + 1,
@@ -130,23 +131,24 @@ class Calendar   {
         );
     }
 
-    #getPrevYear = (date: Date): Date =>{
+    #getPrevYear(date: Date): Date {
         return new Date(
             date.getFullYear() - 1,
             date.getMonth(),
             1
         );
     }
-    #getNextYear = (date: Date): Date => {
+
+    #getNextYear(date: Date): Date {
         return new Date(
             date.getFullYear() + 1,
             date.getMonth(),
             1
         );
     }
-    #compareTwoDates = (date1: Date, date2: Date): boolean => {
+
+    #compareTwoDates(date1: Date, date2: Date): boolean {
         return date1.getTime() === date2.getTime();
     }
 }
-
 export default Calendar;
