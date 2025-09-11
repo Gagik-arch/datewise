@@ -1,15 +1,15 @@
 <a href="https://datewise-khaki.vercel.app" target="_blank">
-    <img src="./datewise-logo.png" width="auto" title="demo">
+    <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/datewise-logo.png" width="auto" title="demo">
 </a>
 
 This calendar is intended to be consumed for all of type javascript projects.
 
 <span>
     <a href="https://github.com/Gagik-arch/datewise" title="Build Status">
-        <img src="./github-logo.png" width="auto" height="20px">
+        <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/github-logo.png" width="auto" height="20px">
     </a>
     <a href="https://www.npmjs.com/package/datewise" title="npm version">
-        <img src="./npm-logo.png" width="auto" height="20px">
+        <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/npm-logo.png" width="auto" height="20px">
     </a>
 </span>
 
