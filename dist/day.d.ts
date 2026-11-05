@@ -1,4 +1,4 @@
-import { TDayStatus } from './types';
+import type { TDayStatus } from './types';
 declare class Day {
     date: Date;
     status: TDayStatus;
@@ -6,3 +6,4 @@ declare class Day {
     isWeekend(): boolean;
 }
 export default Day;
+//# sourceMappingURL=day.d.ts.map

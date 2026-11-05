@@ -1,4 +1,4 @@
-import { TDayStatus } from './types';
+import type { TDayStatus } from './types';
 
 class Day  {
     public date: Date;

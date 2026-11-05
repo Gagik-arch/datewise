@@ -1,4 +1,6 @@
 class Day {
+    date;
+    status;
     constructor(date, status) {
         this.date = date;
         this.status = status;
@@ -8,3 +10,4 @@ class Day {
     }
 }
 export default Day;
+//# sourceMappingURL=day.js.map

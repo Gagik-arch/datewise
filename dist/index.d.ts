@@ -16,3 +16,4 @@ declare class Calendar {
     changeLocale(locale: string): void;
 }
 export default Calendar;
+//# sourceMappingURL=index.d.ts.map
