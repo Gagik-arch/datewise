@@ -1,16 +1,19 @@
 {
-    "name": "datewise-demo",
-    "private": true,
-    "version": "0.0.2",
-    "type": "module",
-    "scripts": {
-        "dev": "vite --host",
-        "build": "tsc && vite build"
-    },
-    "devDependencies": {
-        "@types/node": "^26.6.6",
-        "typescript": "^7.0.2",
-        "vite": "^8.3.6",
-        "vite-plugin-vercel": "^11.2.0"
-    }
+  "name": "example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~7.0.2",
+    "vite": "^8.3.6"
+  },
+  "dependencies": {
+    "@nuvo-js/core": "^1.0.8",
+    "datewise": "^2.0.12"
+  }
 }

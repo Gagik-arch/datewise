@@ -4,6 +4,7 @@ declare class Day {
     status: TDayStatus;
     constructor(date: Date, status: TDayStatus);
     isWeekend(): boolean;
+    isToday(): boolean;
 }
 export default Day;
 //# sourceMappingURL=day.d.ts.map

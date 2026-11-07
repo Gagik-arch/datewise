@@ -1,0 +1,37 @@
+.root {
+    border: none;
+    padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    outline: none;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: #2a835f7a
+    }
+}
+
+.root_primary {
+    background: #2A835F;
+    transition: background 120ms ease;
+    color: white;
+    height: 100%;
+    font-size: 16px;
+    padding: 0 24px;
+
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+.root_error {
+    background: #BC0202;
+    transition: background 120ms ease;
+    color: white;
+    padding: 4px 6px;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

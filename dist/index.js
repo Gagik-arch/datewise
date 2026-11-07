@@ -1,5 +1,4 @@
 import Day from './day.js';
-import { DAY_MS } from './constants.js';
 class Calendar {
     value;
     locale;
@@ -8,72 +7,89 @@ class Calendar {
     weekDays = [];
     selected;
     constructor(date = new Date(), locale = 'en-US') {
+        this.#validateDate(date);
         this.locale = locale;
-        this.selected = new Date(date.setHours(0, 0, 0, 0));
-        this.value = this.selected;
+        this.selected = this.#normalizeDate(date);
+        this.value = new Date(this.selected);
         this.#generateWithLocale();
         this.days = this.#initCalendar();
     }
-    toDate = (date) => {
-        if (!date)
-            throw new Error('first argument<Date> is required');
-        this.selected = date;
-        this.value = date;
+    toDate(date) {
+        this.#validateDate(date);
+        this.selected = this.#normalizeDate(date);
+        this.value = new Date(this.selected);
         this.days = this.#initCalendar();
-        return this.value;
-    };
-    toNextMonth = () => {
+        return new Date(this.value);
+    }
+    toNextMonth() {
         this.selected = this.#getNextMonth(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toPrevMonth = () => {
+        this.#updateCalendar();
+    }
+    toPrevMonth() {
         this.selected = this.#getPrevMonth(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toNextYear = () => {
+        this.#updateCalendar();
+    }
+    toNextYear() {
         this.selected = this.#getNextYear(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toPrevYear = () => {
+        this.#updateCalendar();
+    }
+    toPrevYear() {
         this.selected = this.#getPrevYear(this.selected);
-        this.days = this.#initCalendar();
-    };
+        this.#updateCalendar();
+    }
     changeLocale(locale) {
         this.locale = locale;
+        this.#generateWithLocale();
+    }
+    #updateCalendar() {
+        this.value = new Date(this.selected);
+        this.days = this.#initCalendar();
     }
     #initCalendar() {
-        const year = this.selected.getFullYear(), month = this.selected.getMonth(), dates = [], _firstDayOfWeek = this.#getFirstDayOfMonth(month, year), _prevMonthDaysCount = this.#daysInMonth(month, year), startDate = new Date(year, month - 1, _prevMonthDaysCount - _firstDayOfWeek + 1);
+        const year = this.selected.getFullYear();
+        const month = this.selected.getMonth();
+        const firstDay = this.#getFirstDayOfMonth(month, year);
+        const startDate = new Date(year, month, 1 - firstDay);
+        const dates = [];
         for (let i = 0; i < 42; i++) {
-            const date = new Date(startDate.getTime() + DAY_MS * i);
-            const isCurrentMonth = date.getMonth() === month;
-            const isNextMonth = date.getMonth() === month + 1;
-            dates.push(new Day(date, isCurrentMonth
+            const date = new Date(year, month, startDate.getDate() + i);
+            const isCurrentMonth = date.getFullYear() === year &&
+                date.getMonth() === month;
+            const isPreviousMonth = date.getFullYear() < year ||
+                (date.getFullYear() === year &&
+                    date.getMonth() < month);
+            const status = isCurrentMonth
                 ? 'current-month'
-                : isNextMonth
-                    ? 'next-month'
-                    : 'prev-month'));
+                : isPreviousMonth
+                    ? 'prev-month'
+                    : 'next-month';
+            dates.push(new Day(date, status));
         }
         return dates;
     }
     #generateWithLocale() {
         this.months = Array.from({ length: 12 }, (_, i) => new Date(2024, i, 1)
-            .toLocaleString(this.locale, { month: 'long' }));
-        const date = new Date(2024, 8, 29);
-        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
-        this.weekDays = Array.from({ length: 7 }, (_, i) => {
-            return new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i)
-                .toLocaleString(this.locale, {
-                weekday: 'long',
-            });
-        });
+            .toLocaleString(this.locale, {
+            month: 'long'
+        }));
+        const sunday = new Date(2024, 8, 29);
+        sunday.setDate(sunday.getDate() - sunday.getDay());
+        this.weekDays = Array.from({ length: 7 }, (_, i) => new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i).toLocaleString(this.locale, {
+            weekday: 'long'
+        }));
     }
-    #daysInMonth(month, year) {
-        return new Date(year, month, 0)
-            .getDate();
+    #normalizeDate(date) {
+        const normalized = new Date(date);
+        normalized.setHours(0, 0, 0, 0);
+        return normalized;
+    }
+    #validateDate(date) {
+        if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+            throw new Error('A valid Date instance is required.');
+        }
     }
     #getFirstDayOfMonth(month, year) {
-        return new Date(year, month, 1)
-            .getDay();
+        return new Date(year, month, 1).getDay();
     }
     #getPrevMonth(date) {
         return new Date(date.getFullYear(), date.getMonth() - 1, 1);

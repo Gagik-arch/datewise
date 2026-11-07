@@ -6,7 +6,13 @@ class Day {
         this.status = status;
     }
     isWeekend() {
-        return this.date.getDay() === 0 || this.date.getDay() === 6;
+        return [0, 6].includes(this.date.getDay());
+    }
+    isToday() {
+        const today = new Date();
+        return (this.date.getFullYear() === today.getFullYear() &&
+            this.date.getMonth() === today.getMonth() &&
+            this.date.getDate() === today.getDate());
     }
 }
 export default Day;
