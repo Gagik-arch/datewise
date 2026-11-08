@@ -21,26 +21,37 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
-          node-version: 26
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
-      # Install and validate Datewise
+      - name: Verify release version
+        shell: bash
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+
+          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Version mismatch!"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: npm ci
 
       - name: Type check
         run: npm run typecheck
 
+      - name: Run tests
+        run: npm test
+
       - name: Build Datewise
         run: npm run build
 
-      # Package Datewise
       - name: Pack Datewise
         run: |
           mkdir -p artifacts
           npm pack --pack-destination ./artifacts
 
-      # Test example against the package being released
       - name: Install example dependencies
         working-directory: example
         run: npm ci
@@ -56,6 +67,5 @@ jobs:
         working-directory: example
         run: npm run build
 
-      # Publish
       - name: Publish to npm
         run: npm publish --access public
