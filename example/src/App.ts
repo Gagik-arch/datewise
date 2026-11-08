@@ -155,7 +155,7 @@ function App() {
         )
     }
 
-    return (
+    return ([
         new Scroll({
             children: [
                 new Element<HTMLDivElement>({
@@ -210,7 +210,7 @@ function App() {
                 }).dom,
             ]
         }).dom
-    );
+    ]);
 }
 
 export default App;
