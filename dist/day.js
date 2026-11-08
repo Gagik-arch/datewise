@@ -5,10 +5,10 @@ class Day {
         this.date = date;
         this.status = status;
     }
-    isWeekend() {
+    IsWeekend() {
         return [0, 6].includes(this.date.getDay());
     }
-    isToday() {
+    IsToday() {
         const today = new Date();
         return (this.date.getFullYear() === today.getFullYear() &&
             this.date.getMonth() === today.getMonth() &&

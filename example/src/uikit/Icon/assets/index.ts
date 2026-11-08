@@ -1,5 +1,11 @@
-import Trash from './trash';
+import ChevronLeft from './chevron-left';
+import ChevronRight from './chevron-right';
+import ChevronsRight from './chevrons-right';
+import ChevronsLeft from './chevrons-left';
 
 export default {
-    Trash,
+    ChevronLeft,
+    ChevronRight,
+    ChevronsRight,
+    ChevronsLeft,
 };

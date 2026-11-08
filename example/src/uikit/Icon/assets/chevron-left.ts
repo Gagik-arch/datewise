@@ -1,7 +1,7 @@
 import { SVGElement } from '@nuvo-js/core';
 import type { SVGElementPropsType } from '@nuvo-js/core/types';
 
-function Trash(props: SVGElementPropsType) {
+function ChevronLeft(props: SVGElementPropsType) {
     return (
         new SVGElement({
             tagName: 'svg',
@@ -12,7 +12,7 @@ function Trash(props: SVGElementPropsType) {
                 viewBox: '0 0 24 24',
                 fill: 'none',
                 stroke: 'currentColor',
-                strokeWidth: 4,
+                strokeWidth: 2,
                 strokeLinecap: 'round',
                 strokeLinejoin: 'round',
                 ...props,
@@ -20,20 +20,13 @@ function Trash(props: SVGElementPropsType) {
                     new SVGElement<SVGPolylineElement>({
                         tagName: 'polyline',
                         props: {
-                            points: '3 6 5 6 21 6',
-                            strokeWidth: 4,
+                            points: '15 18 9 12 15 6',
                         },
-                    }).dom, new SVGElement<SVGPathElement>({
-                        tagName: 'path',
-                        props: {
-                            strokeWidth: 4,
-                            d: 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2',
-                        },
-                    }).dom
+                    }).dom,
                 ],
             },
         }).dom
     );
 }
 
-export default Trash;
+export default ChevronLeft;
