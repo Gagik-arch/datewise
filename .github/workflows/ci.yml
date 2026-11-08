@@ -64,7 +64,3 @@ jobs:
       - name: Build example
         working-directory: example
         run: npm run build
-
-     # Publish
-      - name: Publish to npm
-        run: npm publish --access public
