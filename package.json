@@ -1,6 +1,6 @@
 {
     "name": "datewise",
-    "version": "2.0.13",
+    "version": "3.0.0",
     "description": "A lightweight, TypeScript-first calendar utility for JavaScript projects, featuring date navigation, calendar generation, and locale support.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
