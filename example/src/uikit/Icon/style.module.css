@@ -1,0 +1,5 @@
+.root {
+    display: inline-flex;
+    place-items: center;
+    place-content: center;
+}

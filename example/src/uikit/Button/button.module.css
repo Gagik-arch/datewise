@@ -1,0 +1,9 @@
+.root {
+    border: none;
+    padding: 0;
+    user-select: none;
+    -webkit-user-drag: none;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+}

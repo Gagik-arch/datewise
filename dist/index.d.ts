@@ -6,14 +6,16 @@ declare class Calendar {
     days: Day[];
     months: string[];
     weekDays: string[];
-    selected: Date;
+    cursor: Date;
     constructor(date?: Date, locale?: string);
-    toDate: (date: Date) => Date;
-    toNextMonth: () => void;
-    toPrevMonth: () => void;
-    toNextYear: () => void;
-    toPrevYear: () => void;
-    changeLocale(locale: string): void;
+    SetValue(date: Date): Date;
+    SetCursor(date: Date): Date;
+    ToNextMonth(): void;
+    ToPrevMonth(): void;
+    ToNextYear(): void;
+    ToPrevYear(): void;
+    ChangeLocale(locale: string): void;
+    IsEqual(date1: Date, date2: Date): boolean;
 }
 export default Calendar;
 //# sourceMappingURL=index.d.ts.map

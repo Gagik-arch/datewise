@@ -5,8 +5,14 @@ class Day {
         this.date = date;
         this.status = status;
     }
-    isWeekend() {
-        return this.date.getDay() === 0 || this.date.getDay() === 6;
+    IsWeekend() {
+        return [0, 6].includes(this.date.getDay());
+    }
+    IsToday() {
+        const today = new Date();
+        return (this.date.getFullYear() === today.getFullYear() &&
+            this.date.getMonth() === today.getMonth() &&
+            this.date.getDate() === today.getDate());
     }
 }
 export default Day;

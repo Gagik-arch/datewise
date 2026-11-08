@@ -1,106 +1,249 @@
-<a href="https://datewise-khaki.vercel.app" target="_blank">
-    <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/datewise-logo.png" width="auto" title="demo">
-</a>
+<p align="center">
+  <a href="https://datewise-khaki.vercel.app" target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/datewise-logo.png"
+      alt="Datewise"
+      title="Try Datewise Demo"
+    />
+  </a>
+</p>
 
-This calendar is intended to be consumed for all of type javascript projects.
+<p align="center">
+  <a href="https://datewise-khaki.vercel.app">Live Demo</a>
+</p>
 
-<span>
-    <a href="https://github.com/Gagik-arch/datewise" title="Build Status">
-        <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/github-logo.png" width="auto" height="20px">
-    </a>
-    <a href="https://www.npmjs.com/package/datewise" title="npm version">
-        <img src="https://raw.githubusercontent.com/Gagik-arch/datewise/main/npm-logo.png" width="auto" height="20px">
-    </a>
-</span>
+**Datewise** is a lightweight, TypeScript-first calendar utility library for JavaScript and TypeScript projects.
 
-## Table of contents
+It provides a simple API for generating calendar grids, navigating between months and years, working with localized month and weekday names, and handling individual calendar days.
 
--   [Installation](#installation)
--   [Usage](#usage)
--   [Arguments](#Arguments)
--   [Methods](#Methods)
--   [Object](#Object)
--   [Author](#author)
+Designed to be simple, predictable, and easy to integrate into any project.
+
+## Features
+
+- 📅 Generate calendar grids with 42 days (6 weeks).
+- 🔄 Navigate between months and years.
+- 🌍 Locale-aware month and weekday names.
+- 📆 Identify days belonging to previous, current, and next months.
+- 🗓️ Detect weekends and the current day.
+- 💪 Built-in TypeScript support.
+- 🪶 Lightweight with no external dependencies.
 
 ## Installation
 
-```sh
-$ npm install datewise
-
-We need stars (🌟🌟🌟🌟) to make available the package in cdnjs
-please add star in git repository thank you all.
+```bash
+npm install datewise
 ```
 
-## Usage
+## Getting Started
 
-```sh
+```typescript
 import Calendar from 'datewise';
 
+// Initialize a calendar
 const calendar = new Calendar();
+
+// Access generated calendar days
+console.log(calendar.days);
+
+// Access the selected date
+console.log(calendar.selected);
 ```
 
-#### Arguments
+You can also initialize the calendar with a specific date and locale:
 
-| Type          | Default value                |      
-| ------------- | --------------------------   |
-| Date {Object} | new Date()                   |
-| Intl locales  | 'en-US'                      |
-
-#### Calendar Methods
-
-| Method      | argument      | return type  |
-| ----------- | ------------- | ------------ |
-| toDate      | Date {Object} |     void     |
-| toPrevMonth | none          |     void     |
-| toNextMonth | none          |     void     |
-| toNextYear  | none          |     void     |
-| toPrevYear  | none          |     void     |
-| changeLocale| locale:string |     void     |
-
-#### Day Methods
-
-| Method      | argument      | return type  |
-| ----------- | ------------- | ------------ |
-| isWeekEnd   | none          |   boolean    |
-
-Example:
-```js
-
-const calendar = new Calendar();
-const btn = document.getElementByTabName('button')[0];
-
-btn.onclick = () => {
-    calendar.toDate(new Date(2025, 5, 16));
-//  calendar.toPrevMonth();
-//  calendar.toNextMonth();
-//  calendar.toNextYear();
-//  calendar.toPrevYear();
-//  calendar.changeLocale('en-US');
-
-    calendar.days[0].isWeekEnd() // boolean
-};
+```typescript
+const calendar = new Calendar(
+    new Date(2026, 10, 7),
+    'en-US'
+);
 ```
 
-#### Calendar Object
+## API Reference
 
-| keys     | values        |     example      |
-| -------- | ------------- |     --------     |
-| locale   | string        |     'en-US'      |
-| value    | Date {Object} |    new Date()    |
-| selected | Date {Object} |    new Date()    |
-| months   | string[]      | ["January",...]  |
-| weekDays | string[]      | ["Saturday",...] |
-| days     | Day[]         |     new Day()    |
- 
-#### Day Object
+### Calendar
 
-| keys     | values        |     example      |
-| -------- | ------------- |     --------     |
-| date     | Date {Object} |    new Date()    |
-| status   | TDateStatus   | 'current-month'  |
+The `Calendar` class provides the main functionality for managing dates and generating calendar grids.
 
- 
+#### Constructor
 
-## Author
+```typescript
+new Calendar(date?: Date, locale?: string)
+```
 
--   **Gagik** - _Initial work_ - [Gagik-arch](https://github.com/Gagik-arch)
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `date` | `Date` | `new Date()` | Initial calendar date. |
+| `locale` | `string` | `'en-US'` | Locale used for month and weekday names. |
+
+#### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `value` | `Date` | Current calendar value. |
+| `selected` | `Date` | Selected calendar date. |
+| `locale` | `string` | Current locale. |
+| `days` | `Day[]` | Generated calendar days (42 entries). |
+| `months` | `string[]` | Localized month names. |
+| `weekDays` | `string[]` | Localized weekday names, starting with Sunday. |
+
+### Methods
+
+#### `toDate(date: Date): Date`
+
+Set a new selected date and regenerate the calendar.
+
+```typescript
+calendar.toDate(new Date(2026, 5, 15));
+```
+
+#### `toNextMonth(): void`
+
+Navigate to the next month.
+
+```typescript
+calendar.toNextMonth();
+```
+
+#### `toPrevMonth(): void`
+
+Navigate to the previous month.
+
+```typescript
+calendar.toPrevMonth();
+```
+
+#### `toNextYear(): void`
+
+Navigate to the next year.
+
+```typescript
+calendar.toNextYear();
+```
+
+#### `toPrevYear(): void`
+
+Navigate to the previous year.
+
+```typescript
+calendar.toPrevYear();
+```
+
+#### `changeLocale(locale: string): void`
+
+Change the calendar locale and regenerate localized month and weekday names.
+
+```typescript
+calendar.changeLocale('hy-AM');
+```
+
+Supported locales depend on the JavaScript runtime's `Intl` implementation.
+
+## Day
+
+Each generated calendar entry is represented by a `Day` instance.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `date` | `Date` | Date represented by the calendar entry. |
+| `status` | `TDayStatus` | Indicates which month the day belongs to. |
+
+### Day Status
+
+A day can have one of three statuses:
+
+| Status | Description |
+|---|---|
+| `current-month` | Belongs to the currently displayed month. |
+| `prev-month` | Belongs to the previous month. |
+| `next-month` | Belongs to the next month. |
+
+### Methods
+
+#### `isWeekend(): boolean`
+
+Determine whether the day falls on Saturday or Sunday.
+
+```typescript
+const day = calendar.days[0];
+
+console.log(day.isWeekend());
+```
+
+#### `isToday(): boolean`
+
+Determine whether the day represents today's date.
+
+```typescript
+const day = calendar.days[0];
+
+console.log(day.isToday());
+```
+
+## Working with Calendar Days
+
+You can iterate over the generated days and use their properties to build your own calendar UI.
+
+```typescript
+calendar.days.forEach((day) => {
+    console.log({
+        date: day.date,
+        status: day.status,
+        isWeekend: day.isWeekend(),
+        isToday: day.isToday()
+    });
+});
+```
+
+For example, filtering only the days belonging to the current month:
+
+```typescript
+const currentMonthDays = calendar.days.filter(
+    day => day.status === 'current-month'
+);
+```
+
+## Localization
+
+Datewise uses the native JavaScript `Intl` API for localized month and weekday names.
+
+```typescript
+const calendar = new Calendar(
+    new Date(),
+    'hy-AM'
+);
+
+console.log(calendar.months);
+console.log(calendar.weekDays);
+```
+
+You can use any locale supported by your JavaScript environment, such as:
+
+- `en-US` — English (United States)
+- `en-GB` — English (United Kingdom)
+- `hy-AM` — Armenian
+- `fr-FR` — French
+- `de-DE` — German
+- `ru-RU` — Russian
+
+## Browser Compatibility
+
+Datewise relies on standard JavaScript APIs, including:
+
+- `Date`
+- `Intl`
+
+Compatibility depends on the JavaScript runtime and its support for these APIs.
+
+## Philosophy
+
+Datewise focuses on simplicity and native JavaScript capabilities.
+
+Instead of introducing unnecessary abstractions or external dependencies, it provides a straightforward API for calendar generation and date navigation.
+
+**Simple dates. Clear APIs. No unnecessary complexity.**
+
+## License
+
+MIT

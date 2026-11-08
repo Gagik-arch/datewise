@@ -1,0 +1,143 @@
+html,
+body,
+#root,
+#app {
+    height: 100%;
+}
+
+body {
+    font-family: Inter, sans-serif;
+    margin: 0;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+#app {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+svg {
+    pointer-events: none;
+}
+
+img {
+    user-select: none;
+}
+
+#root {
+    padding: 12px;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+#image_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &>img {
+        max-width: 300px;
+        width: 100%;
+        margin: 32px 0;
+        border-radius: 12px;
+    }
+}
+
+.container {
+    margin-top: 24px;
+    width: 100%;
+    max-width: calc(7 * 90px);
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+#navigation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    user-select: none;
+}
+
+#year {
+    text-align: center;
+    flex: 1;
+}
+
+#weekday_container {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 8px;
+
+    &>span {
+        text-align: center;
+        padding: 8px 0;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+}
+
+#day_container {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(6, 90px);
+    gap: 8px;
+}
+
+.day {
+    display: flex;
+    border: 1px solid #e2e8f0 !important;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    transition: all 90ms linear;
+
+    &:hover {
+        border-color: #cbd5e1 !important;
+        background-color: #f1f5f9;
+    }
+
+    &>span {
+        padding: 10px;
+    }
+}
+
+.is_weekend {
+    background-color: #f8fafc !important;
+}
+
+.is_today {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.next-month,
+.prev-month {
+    opacity: 0.35;
+    color: #94a3b8;
+}
+
+.selected {
+    background-color: #e0e7ff !important;
+    border-color: #6366f1 !important;
+    color: #4f46e5;
+    font-weight: 600;
+}

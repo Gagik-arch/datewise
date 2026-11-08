@@ -1,44 +1,40 @@
 {
-    "name": "datewise",
-    "version": "2.0.12",
-    "description": "Calendar for javascript (type script) projects.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "type": "module",
-    "scripts": {
-        "build": "tsc",
-        "pb": "npm run build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Gagik-arch/datewise.git"
-    },
-    "keywords": [
-        "datewise",
-        "calendar",
-        "javascript calendar",
-        "js calendar",
-        "date picker",
-        "ts calendar",
-        "type script calendar",
-        "date"
-    ],
-    "author": "Gagik Chilingaryan",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Gagik-arch/datewise/issues"
-    },
-    "homepage": "https://datewise-khaki.vercel.app/",
-    "files": [
-        "dist",
-        "package.json",
-        "README.md"
-    ],
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
-        }
-    },
-    "sideEffects": false
+  "name": "datewise",
+  "version": "3.0.0",
+  "description": "A lightweight, TypeScript-first calendar utility for JavaScript projects, featuring date navigation, calendar generation, and locale support.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "license": "ISC",
+  "homepage": "https://github.com/Gagik-arch/datewise#readme",
+  "bugs": {
+    "url": "https://github.com/Gagik-arch/datewise/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gagik-arch/datewise.git"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
 }

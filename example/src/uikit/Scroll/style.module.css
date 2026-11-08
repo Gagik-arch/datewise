@@ -1,0 +1,47 @@
+.root {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding-right: 10px;
+}
+
+/* Style the entire scrollbar */
+.root::-webkit-scrollbar {
+    -ms-overflow-style: none;
+    width: 8px;
+    height: 8px;
+}
+
+/* Style the scrollbar track (the background) */
+.root::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 8px;
+    transition: all 200ms ease
+}
+
+/* Style the scrollbar thumb (the draggable handle) */
+.root::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 10px;
+    transition: all 200ms ease
+}
+
+/* Style the scrollbar thumb on hover */
+.root::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(135, 135, 135, 0.3);
+}
+
+/* Style the scrollbar corner (where horizontal and vertical scrollbars meet) */
+.root::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.visible {
+    &::-webkit-scrollbar-track {
+        background-color: rgba(135, 135, 135, 0.08);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(135, 135, 135, 0.25);
+    }
+}

@@ -1,6 +1,6 @@
 import type { TDayStatus } from './types';
 
-class Day  {
+class Day {
     public date: Date;
     public status: TDayStatus;
 
@@ -8,8 +8,19 @@ class Day  {
         this.date = date;
         this.status = status;
     }
-    public isWeekend(): boolean {
-        return this.date.getDay() === 0 || this.date.getDay() === 6
+
+    public IsWeekend(): boolean {
+        return [0, 6].includes(this.date.getDay());
+    }
+
+    public IsToday(): boolean {
+        const today = new Date();
+
+        return (
+            this.date.getFullYear() === today.getFullYear() &&
+            this.date.getMonth() === today.getMonth() &&
+            this.date.getDate() === today.getDate()
+        );
     }
 }
 

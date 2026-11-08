@@ -1,90 +1,109 @@
 import Day from './day.js';
-import { DAY_MS } from './constants.js';
 class Calendar {
     value;
     locale;
     days;
     months = [];
     weekDays = [];
-    selected;
+    cursor;
     constructor(date = new Date(), locale = 'en-US') {
+        this.#ValidateDate(date);
         this.locale = locale;
-        this.selected = new Date(date.setHours(0, 0, 0, 0));
-        this.value = this.selected;
-        this.#generateWithLocale();
-        this.days = this.#initCalendar();
-    }
-    toDate = (date) => {
-        if (!date)
-            throw new Error('first argument<Date> is required');
-        this.selected = date;
+        this.cursor = new Date(date.getFullYear(), date.getMonth(), 1);
         this.value = date;
-        this.days = this.#initCalendar();
-        return this.value;
-    };
-    toNextMonth = () => {
-        this.selected = this.#getNextMonth(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toPrevMonth = () => {
-        this.selected = this.#getPrevMonth(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toNextYear = () => {
-        this.selected = this.#getNextYear(this.selected);
-        this.days = this.#initCalendar();
-    };
-    toPrevYear = () => {
-        this.selected = this.#getPrevYear(this.selected);
-        this.days = this.#initCalendar();
-    };
-    changeLocale(locale) {
-        this.locale = locale;
+        this.#GenerateWithLocale();
+        this.days = this.#InitCalendar();
     }
-    #initCalendar() {
-        const year = this.selected.getFullYear(), month = this.selected.getMonth(), dates = [], _firstDayOfWeek = this.#getFirstDayOfMonth(month, year), _prevMonthDaysCount = this.#daysInMonth(month, year), startDate = new Date(year, month - 1, _prevMonthDaysCount - _firstDayOfWeek + 1);
+    SetValue(date) {
+        this.#ValidateDate(date);
+        this.value = new Date(date);
+        return new Date(this.value);
+    }
+    SetCursor(date) {
+        this.#ValidateDate(date);
+        const cursor = this.#NormalizeDate(new Date(date.getFullYear(), date.getMonth(), 1));
+        this.cursor = cursor;
+        this.#UpdateCalendar();
+        return new Date(this.cursor);
+    }
+    ToNextMonth() {
+        this.SetCursor(this.#GetNextMonth(this.cursor));
+    }
+    ToPrevMonth() {
+        this.SetCursor(this.#GetPrevMonth(new Date(this.cursor)));
+    }
+    ToNextYear() {
+        this.SetCursor(this.#GetNextYear(this.cursor));
+    }
+    ToPrevYear() {
+        this.SetCursor(this.#GetPrevYear(this.cursor));
+    }
+    ChangeLocale(locale) {
+        this.locale = locale;
+        this.#GenerateWithLocale();
+    }
+    IsEqual(date1, date2) {
+        return date1.getTime() === date2.getTime();
+    }
+    #UpdateCalendar() {
+        this.days = this.#InitCalendar();
+    }
+    #InitCalendar() {
+        const year = this.cursor.getFullYear();
+        const month = this.cursor.getMonth();
+        const firstDayOfWeek = this.#GetFirstDayOfMonth(month, year);
+        const startDate = new Date(year, month, 1 - firstDayOfWeek);
+        const dates = [];
         for (let i = 0; i < 42; i++) {
-            const date = new Date(startDate.getTime() + DAY_MS * i);
-            const isCurrentMonth = date.getMonth() === month;
-            const isNextMonth = date.getMonth() === month + 1;
+            const date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
+            const isCurrentMonth = date.getFullYear() === year &&
+                date.getMonth() === month;
+            const isPreviousMonth = date.getFullYear() < year ||
+                (date.getFullYear() === year &&
+                    date.getMonth() < month);
             dates.push(new Day(date, isCurrentMonth
                 ? 'current-month'
-                : isNextMonth
-                    ? 'next-month'
-                    : 'prev-month'));
+                : isPreviousMonth
+                    ? 'prev-month'
+                    : 'next-month'));
         }
         return dates;
     }
-    #generateWithLocale() {
+    #GenerateWithLocale() {
         this.months = Array.from({ length: 12 }, (_, i) => new Date(2024, i, 1)
-            .toLocaleString(this.locale, { month: 'long' }));
-        const date = new Date(2024, 8, 29);
-        const sunday = new Date(date.setDate(date.getDate() - date.getDay()));
-        this.weekDays = Array.from({ length: 7 }, (_, i) => {
-            return new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i)
-                .toLocaleString(this.locale, {
-                weekday: 'long',
-            });
-        });
+            .toLocaleString(this.locale, {
+            month: 'long'
+        }));
+        const sunday = new Date(2024, 8, 29);
+        sunday.setDate(sunday.getDate() - sunday.getDay());
+        this.weekDays = Array.from({ length: 7 }, (_, i) => new Date(sunday.getFullYear(), sunday.getMonth(), sunday.getDate() + i).toLocaleString(this.locale, {
+            weekday: 'long'
+        }));
     }
-    #daysInMonth(month, year) {
-        return new Date(year, month, 0)
-            .getDate();
+    #NormalizeDate(date) {
+        const normalized = new Date(date);
+        normalized.setHours(0, 0, 0, 0);
+        return normalized;
     }
-    #getFirstDayOfMonth(month, year) {
-        return new Date(year, month, 1)
-            .getDay();
+    #ValidateDate(date) {
+        if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+            throw new Error('A valid Date instance is required.');
+        }
     }
-    #getPrevMonth(date) {
+    #GetFirstDayOfMonth(month, year) {
+        return new Date(year, month, 1).getDay();
+    }
+    #GetPrevMonth(date) {
         return new Date(date.getFullYear(), date.getMonth() - 1, 1);
     }
-    #getNextMonth(date) {
+    #GetNextMonth(date) {
         return new Date(date.getFullYear(), date.getMonth() + 1, 1);
     }
-    #getPrevYear(date) {
+    #GetPrevYear(date) {
         return new Date(date.getFullYear() - 1, date.getMonth(), 1);
     }
-    #getNextYear(date) {
+    #GetNextYear(date) {
         return new Date(date.getFullYear() + 1, date.getMonth(), 1);
     }
 }
