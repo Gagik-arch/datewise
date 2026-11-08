@@ -33,7 +33,9 @@ class Calendar {
     public SetCursor(date: Date): Date {
         this.#ValidateDate(date);
 
-        this.cursor = this.#NormalizeDate(date);
+        const cursor = this.#NormalizeDate(new Date(date.getFullYear(), date.getMonth(), 1));
+
+        this.cursor = cursor
         this.#UpdateCalendar();
 
         return new Date(this.cursor);
