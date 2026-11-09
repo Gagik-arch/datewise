@@ -188,6 +188,8 @@ class Calendar {
     }
 }
 
-window['datewise'] = Calendar
+if (typeof window !== 'undefined') {
+    window['datewise'] = Calendar;
+}
 
 export default Calendar;
