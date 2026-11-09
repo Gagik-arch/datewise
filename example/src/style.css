@@ -32,6 +32,10 @@ img {
     padding: 12px;
     margin: 0 auto;
     max-width: 800px;
+
+    &>h5 {
+        text-align: center;
+    }
 }
 
 #image_container {
@@ -90,6 +94,11 @@ img {
         padding: 8px 0;
         box-sizing: border-box;
         cursor: pointer;
+
+        &:hover {
+            background-color: #8789f3 !important;
+            color: white
+        }
     }
 }
 
@@ -106,11 +115,11 @@ img {
     font-size: 16px;
     box-sizing: border-box;
     background-color: #ffffff;
-    transition: all 90ms linear;
+    transition: all 40ms ease-in;
 
     &:hover {
         border-color: #cbd5e1 !important;
-        background-color: #f1f5f9;
+        background-color: #ddebf8 !important
     }
 
     &>span {
@@ -140,4 +149,9 @@ img {
     border-color: #6366f1 !important;
     color: #4f46e5;
     font-weight: 600;
+}
+
+.weekday-select {
+    background-color: #a0a1f5 !important;
+    color: white;
 }

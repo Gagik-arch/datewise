@@ -188,4 +188,6 @@ class Calendar {
     }
 }
 
+window['datewise'] = Calendar
+
 export default Calendar;

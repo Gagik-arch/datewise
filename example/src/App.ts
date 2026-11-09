@@ -2,7 +2,6 @@ import { Element, Store } from '@nuvo-js/core';
 import { Button, Image, Icon } from './uikit';
 import Scroll from './uikit/Scroll';
 import Calendar from '../../dist';
-import logo from './assets/images/datewise-logo.png'
 import { clsx } from './utils/clsx';
 import type { TDayStatus } from '../../dist/types';
 
@@ -67,8 +66,9 @@ function App() {
         }
     }
 
-    store.Effect(() => {
+    const unsubscribe = store.Effect(() => {
         console.log(calendar)
+
         year.SetProps({
             children: [
                 calendar.cursor.toLocaleDateString('en', {
@@ -89,7 +89,7 @@ function App() {
                             day.status,
                             day.IsWeekend() ? 'is_weekend' : undefined,
                             day.IsToday() ? 'is_today' : undefined,
-                            (day.date.toLocaleDateString('us', {
+                            'day_' + (day.date.toLocaleDateString('us', {
                                 weekday: 'short'
                             })).toLowerCase(),
                             day.status,
@@ -169,7 +169,7 @@ function App() {
                                     id: 'image_container',
                                     children: [
                                         new Image({
-                                            src: logo,
+                                            src: 'logo.png',
                                         }).dom,
                                     ]
                                 }
@@ -185,6 +185,31 @@ function App() {
                                         new Element<HTMLDivElement>({
                                             tagName: 'div',
                                             props: {
+                                                events: {
+                                                    onmousemove: (e) => {
+                                                        const target = e.target as HTMLDivElement
+                                                        const key = (target.closest('[data-day]') as HTMLElement)?.dataset.day
+
+                                                        if (key) {
+                                                            const elements = [...document.querySelectorAll(`.day`)]
+
+                                                            elements.forEach(element => {
+                                                                if (element.classList.contains(`day_${key}`)) {
+                                                                    element.classList.add('weekday-select')
+                                                                } else {
+                                                                    element.classList.remove('weekday-select')
+                                                                }
+                                                            });
+                                                        }
+                                                    },
+                                                    onmouseleave: () => {
+                                                        const elements = [...document.getElementsByClassName('day')]
+
+                                                        elements.forEach(element => {
+                                                            element.classList.remove('weekday-select')
+                                                        });
+                                                    }
+                                                },
                                                 id: 'weekday_container',
                                                 children: calendar.weekDays.map(weekday => {
                                                     return (
@@ -192,7 +217,7 @@ function App() {
                                                             tagName: 'span',
                                                             props: {
                                                                 key: weekday,
-                                                                className: weekday.substring(0, 3).toLowerCase(),
+                                                                ['data-day']: weekday.substring(0, 3).toLowerCase(),
                                                                 children: [weekday.substring(0, 3)],
                                                             },
                                                         }).dom
@@ -205,10 +230,32 @@ function App() {
                                     ],
                                 },
                             }).dom,
+
+                            new Element<HTMLHeadElement>({
+                                tagName: 'h5',
+                                props: {
+                                    children: [
+                                        'Built with ',
+                                        new Element<HTMLAnchorElement>({
+                                            tagName: 'a',
+                                            props: {
+                                                href: 'https://www.npmjs.com/package/@nuvo-js/core',
+                                                target: '_blank',
+                                                children: [
+                                                    '@nuvo-js/core'
+                                                ]
+                                            }
+                                        }).dom,
+                                        '— a lightweight TypeScript UI library.'
+                                    ]
+                                }
+                            }).dom
                         ],
                     },
                 }).dom,
             ]
+        }).OnUnMount(() => {
+            unsubscribe()
         }).dom
     ]);
 }

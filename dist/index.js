@@ -107,5 +107,6 @@ class Calendar {
         return new Date(date.getFullYear() + 1, date.getMonth(), 1);
     }
 }
+window['datewise'] = Calendar;
 export default Calendar;
 //# sourceMappingURL=index.js.map

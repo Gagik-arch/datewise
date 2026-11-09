@@ -5,8 +5,3 @@ import App from './App';
 const root = document.getElementById('app');
 
 createRoot(root!, App());
-
-
-const datewise = window['datewise']
-
-console.log(datewise)
