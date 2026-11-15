@@ -1,40 +1,42 @@
 {
-  "name": "datewise",
-  "version": "3.0.2",
-  "description": "A lightweight, TypeScript-first calendar utility for JavaScript projects, featuring date navigation, calendar generation, and locale support.",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+    "name": "datewise",
+    "version": "3.0.2",
+    "description": "A lightweight, TypeScript-first calendar utility for JavaScript projects, featuring date navigation, calendar generation, and locale support.",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "type": "module",
+    "scripts": {
+        "build": "tsup src/index.ts src/types.ts --format esm --dts --minify --clean",
+        "prepublishOnly": "npm run build",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "sideEffects": false,
+    "license": "ISC",
+    "homepage": "https://github.com/Gagik-arch/datewise#readme",
+    "bugs": {
+        "url": "https://github.com/Gagik-arch/datewise/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Gagik-arch/datewise.git"
+    },
+    "devDependencies": {
+        "tsup": "^9.0.0",
+        "typescript": "^6.0.2",
+        "vitest": "^5.1.0"
     }
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "sideEffects": false,
-  "license": "ISC",
-  "homepage": "https://github.com/Gagik-arch/datewise#readme",
-  "bugs": {
-    "url": "https://github.com/Gagik-arch/datewise/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Gagik-arch/datewise.git"
-  },
-  "devDependencies": {
-    "typescript": "^7.0.2",
-    "vitest": "^5.1.0"
-  }
 }

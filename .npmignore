@@ -10,3 +10,5 @@ npm-logo.png
 datewise-logo.png
 
 tsconfig.json
+
+dist/**/*.map

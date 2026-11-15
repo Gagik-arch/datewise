@@ -1,4 +1,13 @@
-import Day from './day.js';
+import { TDayStatus } from './types.js';
+
+declare class Day {
+    date: Date;
+    status: TDayStatus;
+    constructor(date: Date, status: TDayStatus);
+    IsWeekend(): boolean;
+    IsToday(): boolean;
+}
+
 declare class Calendar {
     #private;
     value: Date;
@@ -17,5 +26,5 @@ declare class Calendar {
     ChangeLocale(locale: string): void;
     IsEqual(date1: Date, date2: Date): boolean;
 }
-export default Calendar;
-//# sourceMappingURL=index.d.ts.map
+
+export { Calendar as default };
