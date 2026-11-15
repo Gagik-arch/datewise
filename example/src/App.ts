@@ -9,21 +9,12 @@ function App() {
     const calendar = new Calendar()
     const store = new Store<number>(0);
 
-    const dayContainer = new Element<HTMLDivElement>({
-        tagName: 'div',
-        props: {
-            id: 'day_container',
-            children: [
-
-            ],
-        },
+    const dayContainer = new Element<HTMLDivElement>('div', {
+        id: 'day_container',
     })
 
-    const year = new Element<HTMLDivElement>({
-        tagName: 'div',
-        props: {
-            id: 'year'
-        }
+    const year = new Element<HTMLDivElement>('div', {
+        id: 'year'
     })
 
     const update = () => {
@@ -96,11 +87,8 @@ function App() {
                             calendar.IsEqual(calendar.value, day.date) ? 'selected' : undefined
                         ),
                         children: [
-                            new Element<HTMLSpanElement>({
-                                tagName: 'span',
-                                props: {
-                                    children: [day.date.getDate().toString()]
-                                }
+                            new Element<HTMLSpanElement>('span', {
+                                children: [day.date.getDate().toString()]
                             }).dom
                         ],
                     }).dom
@@ -111,9 +99,7 @@ function App() {
 
     function navigation() {
         return (
-            new Element<HTMLDivElement>({
-                tagName: 'div',
-                props: {
+            new Element<HTMLDivElement>('div',{
                     id: 'navigation',
                     children: [
                         new Button({
@@ -150,7 +136,6 @@ function App() {
 
                         }).dom,
                     ]
-                }
             }).dom
         )
     }
@@ -158,100 +143,79 @@ function App() {
     return ([
         new Scroll({
             children: [
-                new Element<HTMLDivElement>({
-                    tagName: 'div',
-                    props: {
-                        id: 'root',
-                        children: [
-                            new Element<HTMLDivElement>({
-                                tagName: 'div',
-                                props: {
-                                    id: 'image_container',
-                                    children: [
-                                        new Image({
-                                            src: 'logo.png',
-                                        }).dom,
-                                    ]
-                                }
-                            }).dom,
+                new Element<HTMLDivElement>('div', {
+                    id: 'root',
+                    children: [
+                        new Element<HTMLDivElement>('div', {
+                            id: 'image_container',
+                            children: [
+                                new Image({
+                                    src: 'logo.png',
+                                }).dom,
+                            ]
+                        }).dom,
 
-                            new Element<HTMLDivElement>({
-                                tagName: 'div',
-                                props: {
-                                    className: 'container',
-                                    children: [
-                                        navigation(),
+                        new Element<HTMLDivElement>('div', {
+                            className: 'container',
+                            children: [
+                                navigation(),
 
-                                        new Element<HTMLDivElement>({
-                                            tagName: 'div',
-                                            props: {
-                                                events: {
-                                                    onmousemove: (e) => {
-                                                        const target = e.target as HTMLDivElement
-                                                        const key = (target.closest('[data-day]') as HTMLElement)?.dataset.day
+                                new Element<HTMLDivElement>('div',{
+                                        events: {
+                                            onmousemove: (e) => {
+                                                const target = e.target as HTMLDivElement
+                                                const key = (target.closest('[data-day]') as HTMLElement)?.dataset.day
 
-                                                        if (key) {
-                                                            const elements = [...document.querySelectorAll(`.day`)]
+                                                if (key) {
+                                                    const elements = [...document.querySelectorAll(`.day`)]
 
-                                                            elements.forEach(element => {
-                                                                if (element.classList.contains(`day_${key}`)) {
-                                                                    element.classList.add('weekday-select')
-                                                                } else {
-                                                                    element.classList.remove('weekday-select')
-                                                                }
-                                                            });
-                                                        }
-                                                    },
-                                                    onmouseleave: () => {
-                                                        const elements = [...document.getElementsByClassName('day')]
-
-                                                        elements.forEach(element => {
+                                                    elements.forEach(element => {
+                                                        if (element.classList.contains(`day_${key}`)) {
+                                                            element.classList.add('weekday-select')
+                                                        } else {
                                                             element.classList.remove('weekday-select')
-                                                        });
-                                                    }
-                                                },
-                                                id: 'weekday_container',
-                                                children: calendar.weekDays.map(weekday => {
-                                                    return (
-                                                        new Element<HTMLSpanElement>({
-                                                            tagName: 'span',
-                                                            props: {
-                                                                key: weekday,
-                                                                ['data-day']: weekday.substring(0, 3).toLowerCase(),
-                                                                children: [weekday.substring(0, 3)],
-                                                            },
-                                                        }).dom
-                                                    )
-                                                })
+                                                        }
+                                                    });
+                                                }
                                             },
-                                        }).dom,
+                                            onmouseleave: () => {
+                                                const elements = [...document.getElementsByClassName('day')]
 
-                                        dayContainer.dom
-                                    ],
-                                },
-                            }).dom,
-
-                            new Element<HTMLHeadElement>({
-                                tagName: 'h5',
-                                props: {
-                                    children: [
-                                        'Built with ',
-                                        new Element<HTMLAnchorElement>({
-                                            tagName: 'a',
-                                            props: {
-                                                href: 'https://www.npmjs.com/package/@nuvo-js/core',
-                                                target: '_blank',
-                                                children: [
-                                                    '@nuvo-js/core'
-                                                ]
+                                                elements.forEach(element => {
+                                                    element.classList.remove('weekday-select')
+                                                });
                                             }
-                                        }).dom,
-                                        '— a lightweight TypeScript UI library.'
+                                        },
+                                        id: 'weekday_container',
+                                        children: calendar.weekDays.map(weekday => {
+                                            return (
+                                                new Element<HTMLSpanElement>('span',{
+                                                        key: weekday,
+                                                        ['data-day']: weekday.substring(0, 3).toLowerCase(),
+                                                        children: [weekday.substring(0, 3)],
+                                                }).dom
+                                            )
+                                        })
+                                }).dom,
+
+                                dayContainer.dom
+                            ],
+                        }).dom,
+
+                        new Element<HTMLHeadElement>('h5', {
+                            children: [
+                                'Built with ',
+                                new Element<HTMLAnchorElement>('a', {
+                                    href: 'https://www.npmjs.com/package/@nuvo-js/core',
+                                    target: '_blank',
+                                    children: [
+                                        '@nuvo-js/core'
                                     ]
-                                }
-                            }).dom
-                        ],
-                    },
+                                }).dom,
+                                '— a lightweight TypeScript UI library.'
+                            ]
+                        }).dom
+                    ],
                 }).dom,
             ]
         }).OnUnMount(() => {

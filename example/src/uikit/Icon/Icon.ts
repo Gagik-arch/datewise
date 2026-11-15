@@ -14,9 +14,7 @@ class Icon extends Element<HTMLSpanElement> {
             size: 24, ...props,
         };
 
-        super({
-            tagName: 'span',
-            props: {
+        super('span',{
                 className: [ styles.root, _props.className || '' ].join(' '),
                 style: {
                     width: `${size}px`,
@@ -29,7 +27,6 @@ class Icon extends Element<HTMLSpanElement> {
                         ..._props,
                     })
                 ],
-            },
         });
     }
 }

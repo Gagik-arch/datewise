@@ -10,13 +10,10 @@ class Image extends Element<HTMLImageElement> {
         ...props
     }: ImageProps) {
 
-        super({
-            tagName: 'img',
-            props: {
-                className: styles.root,
-                alt,
-                ...props,
-            },
+        super('img', {
+            className: styles.root,
+            alt,
+            ...props,
         });
     }
 }
